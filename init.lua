@@ -35,6 +35,8 @@ local core_conf_files = {
   "colorschemes.lua", -- colorscheme settings
 }
 
+header_script = vim.fn.stdpath("config") .. "/header.py"
+
 -- source all the core config files
 for _, file_name in ipairs(core_conf_files) do
   if vim.endswith(file_name, 'vim') then
