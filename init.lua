@@ -24,6 +24,8 @@ if version.cmp(ev, actual_ver) ~= 0 then
   vim.api.nvim_err_writeln(msg)
 end
 
+vim.env.PATH = '/mnt/nfs/homes/hmelica/.config/nvim/venv_nvim/bin:/mnt/nfs/homes/hmelica/tools/node-v14.15.4-linux-x64/bin:' .. vim.env.PATH
+
 local core_conf_files = {
   "globals.lua", -- some global settings
   "options.vim", -- setting options in nvim
