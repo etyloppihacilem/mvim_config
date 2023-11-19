@@ -2,6 +2,9 @@ local keymap = vim.keymap
 local api = vim.api
 local uv = vim.loop
 
+-- header
+keymap.set({"n", "i"}, "<F1>", ":!python3 " .. header_script .. " %<CR>")
+
 -- Save key strokes (now we do not need to press shift to enter command mode).
 keymap.set({ "n", "x" }, ";", ":")
 
