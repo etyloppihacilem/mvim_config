@@ -71,7 +71,7 @@ set wildmode=list:longest
 set scrolloff=3
 
 " Use mouse to select and resize windows, etc.
-set mouse=nic  " Enable mouse in several mode
+set mouse=a  " Enable mouse in several mode
 set mousemodel=popup  " Set the behaviour of mouse
 set mousescroll=ver:1,hor:0
 
@@ -176,6 +176,6 @@ set diffopt+=context:3  " context for diff
 set diffopt+=internal,indent-heuristic,algorithm:histogram
 set diffopt+=linematch:60
 
-set nowrap  " do no wrap
+set wrap  " wrap
 set noruler
 set background=dark
