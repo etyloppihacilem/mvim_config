@@ -179,3 +179,5 @@ set diffopt+=linematch:60
 set wrap  " wrap
 set noruler
 set background=dark
+
+set nosplitright

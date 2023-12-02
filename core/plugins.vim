@@ -159,17 +159,24 @@ let g:XkbSwitchEnabled = 1
 
 """""""""""""""""""""""""""""" neoformat settings """""""""""""""""""""""
 let g:neoformat_enabled_python = ['black', 'yapf']
-let g:neoformat_cpp_clangformat = {
-      \ 'exe': 'clang-format',
-      \ 'args': ['--style="{IndentWidth: 4}"']
+let g:neoformat_verbose = 1 " debug
+let g:neoformat_cpp_uncrustify = {
+      \ 'exe': stdpath("config") . '/uncrustify/build/uncrustify',
+      \ 'args': ['-c ' . stdpath('config') . "/formatter_config/c.cfg", "-l CPP"],
+      \ 'replace': 0,
+      \ 'stdin': 1,
+      \ 'no_append': 1
       \ }
-let g:neoformat_c_clangformat = {
-      \ 'exe': 'clang-format',
-      \ 'args': ['--style="{IndentWidth: 4}"']
+let g:neoformat_c_uncrustify = {
+      \ 'exe': stdpath("config") . '/uncrustify/build/uncrustify',
+      \ 'args': ['-c ' . stdpath('config') . "/formatter_config/c.cfg -l C"],
+      \ 'replace': 1,
+      \ 'stdin': 1,
+      \ 'no_append': 1
       \ }
 
-let g:neoformat_enabled_cpp = ['clangformat']
-let g:neoformat_enabled_c = ['clangformat']
+let g:neoformat_enabled_cpp = ['uncrustify']
+let g:neoformat_enabled_c = ['uncrustify']
 
 """""""""""""""""""""""""vim-markdown settings"""""""""""""""""""
 " Disable header folding
