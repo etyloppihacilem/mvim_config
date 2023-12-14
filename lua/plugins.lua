@@ -46,14 +46,14 @@ local plugin_specs = {
       require("config.lsp")
     end,
   },
-
+  {"williamboman/mason.nvim"}, -- lsp installation
   {
     "nvim-treesitter/nvim-treesitter",
     enabled = function()
       if vim.g.is_mac then
         return true
       end
-      return false
+      return true--false
     end,
     event = "VeryLazy",
     build = ":TSUpdate",
@@ -515,3 +515,4 @@ local lazy_opts = {
 }
 
 require("lazy").setup(plugin_specs, lazy_opts)
+require("mason").setup()
