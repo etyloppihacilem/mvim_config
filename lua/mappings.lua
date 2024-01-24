@@ -5,6 +5,12 @@ local uv = vim.loop
 -- header
 keymap.set({"n", "i"}, "<F1>", ":!python3 " .. header_script .. " %<CR>")
 
+-- quick fix
+keymap.set("n", "<leader>cf", ":lua vim.lsp.buf.code_action()<CR>", { silent = true, desc = "LSP code action (fix)" })
+
+-- format
+keymap.set({"n", "i"}, "<c-e>", ":Neoformat<CR>", { desc = "Autoformat with uncrustify" })
+
 -- Save key strokes (now we do not need to press shift to enter command mode).
 keymap.set({ "n", "x" }, ";", ":")
 
