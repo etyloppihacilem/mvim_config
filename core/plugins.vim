@@ -170,7 +170,7 @@ let g:neoformat_cpp_uncrustify = {
 let g:neoformat_c_uncrustify = {
       \ 'exe': stdpath("config") . '/uncrustify/build/uncrustify',
       \ 'args': ['-c ' . stdpath('config') . "/formatter_config/c.cfg -l C"],
-      \ 'replace': 1,
+      \ 'replace': 0,
       \ 'stdin': 1,
       \ 'no_append': 1
       \ }
