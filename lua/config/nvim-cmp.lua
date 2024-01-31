@@ -5,8 +5,8 @@ local lspkind = require("lspkind")
 cmp.setup {
   snippet = {
     expand = function(args)
-      -- For `ultisnips` user.
-      vim.fn["UltiSnips#Anon"](args.body)
+      -- For `luasnip` user.
+      require("luasnip").lsp_expand(args.body)
     end,
   },
   mapping = cmp.mapping.preset.insert {
@@ -32,7 +32,7 @@ cmp.setup {
   },
   sources = {
     { name = "nvim_lsp" }, -- For nvim-lsp
-    { name = "ultisnips" }, -- For ultisnips user.
+    { name = "luasnip" }, -- For luasnip user.
     { name = "path" }, -- for path completion
     { name = "buffer", keyword_length = 2 }, -- for buffer word completion
     { name = "emoji", insert = true }, -- emoji completion
@@ -49,7 +49,7 @@ cmp.setup {
       mode = "symbol_text",
       menu = {
         nvim_lsp = "[LSP]",
-        ultisnips = "[US]",
+        luasnip = "[US]",
         nvim_lua = "[Lua]",
         path = "[Path]",
         buffer = "[Buffer]",
@@ -63,7 +63,7 @@ cmp.setup {
 cmp.setup.filetype("tex", {
   sources = {
     { name = "omni" },
-    { name = "ultisnips" }, -- For ultisnips user.
+    { name = "luasnip" }, -- For luasnip user.
     { name = "buffer", keyword_length = 2 }, -- for buffer word completion
     { name = "path" }, -- for path completion
   },
