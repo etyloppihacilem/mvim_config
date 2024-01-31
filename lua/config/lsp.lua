@@ -185,6 +185,7 @@ end
 
 if utils.executable("clangd") then
   lspconfig.clangd.setup {
+    cmd = {"clangd", "--enable-config"},
     on_attach = custom_attach,
     capabilities = capabilities,
     filetypes = { "c", "cpp", "cc" },
