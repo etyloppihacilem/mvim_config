@@ -37,6 +37,9 @@ local core_conf_files = {
 
 header_script = vim.fn.stdpath("config") .. "/header.py"
 
+-- snippets path
+vim.g.lua_snippets_path = vim.fn.stdpath("config") .. "/my_snippets"
+
 -- source all the core config files
 for _, file_name in ipairs(core_conf_files) do
   if vim.endswith(file_name, 'vim') then
