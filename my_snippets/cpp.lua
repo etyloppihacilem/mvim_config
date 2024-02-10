@@ -65,5 +65,14 @@ return {
             "\treturn (*this);",
             "}",
         })
+    }),
+    s("exception", {
+        t("class "), i(1, "MyException"), t({
+            ": public std::exception {",
+            "\tvirtual const char *what() const throw() {",
+            "\t\treturn (\""
+        }),
+        f(copy, 1),
+        t({" happened\");", "\t}", "};"})
     })
 }
