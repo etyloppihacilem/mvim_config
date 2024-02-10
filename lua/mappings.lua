@@ -100,6 +100,7 @@ keymap.set("n", "<leader>sv", function()
       update $MYVIMRC
       source $MYVIMRC
     ]])
+    require("config.luasnip").loaders()
   vim.notify("Nvim config successfully reloaded!", vim.log.levels.INFO, { title = "nvim-config" })
 end, {
   silent = true,
