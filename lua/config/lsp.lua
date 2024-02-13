@@ -152,7 +152,7 @@ if utils.executable("pylsp") then
       },
     },
     flags = {
-      debounce_text_changes = 200,
+      debounce_text_changes = 1000,
     },
     capabilities = capabilities,
   }
