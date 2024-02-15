@@ -76,7 +76,7 @@ local plugin_specs = {
     },
 
     -- Python indent (follows the PEP8 style)
-    { "Vimjas/vim-python-pep8-indent", ft = { "python" } },
+    -- { "Vimjas/vim-python-pep8-indent", ft = { "python" } },
 
     -- Python-related text object
     { "jeetsukumaran/vim-pythonsense", ft = { "python" } },
@@ -382,7 +382,7 @@ local plugin_specs = {
     -- { "machakann/vim-sandwich", event = "VeryLazy" },
 
     -- Add indent object for vim (useful for languages like Python)
-    { "michaeljsmith/vim-indent-object", event = "VeryLazy" },
+    -- { "michaeljsmith/vim-indent-object", event = "VeryLazy" },
 
     -- Only use these plugin on Windows and Mac and when LaTeX is installed
     {

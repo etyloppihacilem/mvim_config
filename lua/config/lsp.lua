@@ -129,7 +129,8 @@ if utils.executable("pylsp") then
       pylsp = {
         plugins = {
           -- formatter options
-          black = { enabled = true },
+          -- flake8 = { enabled = false },
+          black = { enabled = false },
           autopep8 = { enabled = false },
           yapf = { enabled = false },
           -- linter options
@@ -139,7 +140,7 @@ if utils.executable("pylsp") then
           pycodestyle = { enabled = false },
           -- type checker
           pylsp_mypy = {
-            enabled = true,
+            enabled = false,
             overrides = { "--python-executable", py_path, true },
             report_progress = true,
             live_mode = false
@@ -147,7 +148,7 @@ if utils.executable("pylsp") then
           -- auto-completion options
           jedi_completion = { fuzzy = true },
           -- import sorting
-          isort = { enabled = true },
+          isort = { enabled = false },
         },
       },
     },
