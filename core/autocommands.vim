@@ -16,6 +16,7 @@ augroup END
 " More accurate syntax highlighting? (see `:h syn-sync`)
 augroup accurate_syn_highlight
   autocmd!
+  autocmd BufNewFile,BufRead *.tpp set filetype=cpp
   autocmd BufEnter * :syntax sync fromstart
 augroup END
 
