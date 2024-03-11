@@ -160,8 +160,10 @@ if utils.executable("pylsp") then
   lspconfig.pyright.setup{
       on_attach = custom_attach,
       capabilities = capabilities,
-      python = {
-        pythonPath = py_path,
+      settings ={
+        python = {
+            pythonPath = py_path,
+        },
       },
   }
 else
