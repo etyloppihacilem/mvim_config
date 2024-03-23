@@ -550,6 +550,9 @@ local plugin_specs = {
         },
         lazy = false,
     },
+    {
+        'github/copilot.vim'
+    }
 }
 
 -- configuration for lazy itself.
