@@ -411,3 +411,6 @@ function! s:wilder_init() abort
     echohl Error |echomsg "Wilder.nvim missing"| echohl None
   endtry
 endfunction
+
+""" Disable copilot by default """
+Copilot disable
