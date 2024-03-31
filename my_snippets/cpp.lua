@@ -69,10 +69,22 @@ return {
     s("exception", {
         t("class "), i(1, "MyException"), t({
             ": public std::exception {",
-            "\tvirtual const char *what() const throw() {",
-            "\t\treturn (\""
+            "public:", "\t"}),
+        f(copy, 1),
+        t("(const std::string &msg = \""),
+        f(copy, 1),
+        t({" happened.\") throw() :",
+            "\t\t_message(msg) {}",
+            "virtual ~",
         }),
         f(copy, 1),
-        t({" happened\");", "\t}", "};"})
+        t({
+        "() throw() {}",
+        "\tconst char *what() const throw() {",
+            "\t\treturn (_message.c_str());",
+        "\t}",
+        "private:",
+        "\tstd::string _message;",
+    "};"})
     })
 }
