@@ -159,7 +159,7 @@ let g:XkbSwitchEnabled = 1
 
 """""""""""""""""""""""""""""" neoformat settings """""""""""""""""""""""
 let g:neoformat_enabled_python = ['black', 'yapf']
-let g:neoformat_verbose = 1 " debug
+let g:neoformat_verbose = 0 " debug
 let g:neoformat_cpp_uncrustify = {
       \ 'exe': stdpath("config") . '/uncrustify/build/uncrustify',
       \ 'args': ['-c ' . stdpath('config') . "/formatter_config/c.cfg", "-l CPP"],
