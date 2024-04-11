@@ -38,7 +38,7 @@ let &backupdir=g:backupdir
 let &backupskip=&wildignore
 set backup  " create backup for files
 set backupcopy=yes  " copy the original file to backupdir and overwrite it
-set cc=80
+set cc=120
 
 " General tab settings
 set tabstop=4       " number of visual spaces per TAB
