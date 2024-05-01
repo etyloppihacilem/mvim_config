@@ -181,3 +181,4 @@ set noruler
 set background=dark
 
 set nosplitright
+set nofoldenable
