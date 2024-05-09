@@ -524,7 +524,8 @@ local plugin_specs = {
         event = 'VeryLazy',
         config = function()
             -- Load treesitter grammar for org
-            require('orgmode').setup_ts_grammar()
+            -- require('orgmode').setup_ts_grammar()
+            -- no longer required
 
             -- Setup treesitter
             require('nvim-treesitter.configs').setup({
