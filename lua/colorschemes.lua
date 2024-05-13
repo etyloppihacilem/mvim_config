@@ -21,6 +21,8 @@ M.colorscheme2dir = {
   material = "material.nvim",
 }
 
+M.telescope = { style = "borderless" }
+
 M.gruvbox8 = function()
   -- Italic options should be put before colorscheme setting,
   -- see https://github.com/morhetz/gruvbox/wiki/Terminal-specific#1-italics-is-disabled

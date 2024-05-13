@@ -132,9 +132,34 @@ local plugin_specs = {
     {
         "nvim-telescope/telescope.nvim",
         cmd = "Telescope",
+        module = 'telescope',
         dependencies = {
         "nvim-telescope/telescope-symbols.nvim",
+        'nvim-lua/plenary.nvim',
         },
+        opts = function()
+            return require('config.telescope')
+        end,
+        config = function(_, opts)
+            -- dofile("telescope")
+            local telescope = require "telescope"
+            telescope.setup(opts)
+        end,
+        -- telescope
+        keys = {
+            {"n", "<leader>fg", "<cmd>Telescope live_grep<CR>", { desc = "telescope live grep" }},
+            {"n", "<leader>fb", "<cmd>Telescope buffers<CR>", { desc = "telescope find buffers" }},
+            {"n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "telescope help page" }},
+            {"n", "<leader>ma", "<cmd>Telescope marks<CR>", { desc = "telescope find marks" }},
+            {"n", "<leader>fo", "<cmd>Telescope oldfiles<CR>", { desc = "telescope find oldfiles" }},
+            {"n", "<leader>fz", "<cmd>Telescope current_buffer_fuzzy_find<CR>", { desc = "telescope find in current buffer" }},
+            {"n", "<leader>cm", "<cmd>Telescope git_commits<CR>", { desc = "telescope git commits" }},
+            {"n", "<leader>gt", "<cmd>Telescope git_status<CR>", { desc = "telescope git status" }},
+            {"n", "<leader>pt", "<cmd>Telescope terms<CR>", { desc = "telescope pick hidden term" }},
+            {"n", "<leader>th", "<cmd>Telescope themes<CR>", { desc = "telescope nvchad themes" }},
+            {"n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "telescope find files" }},
+            {"n", "<leader>fa", "<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>", { desc = "telescope find all files" }},
+        }
     },
 
     -- A list of colorscheme plugin you may want to try. Find what suits you.
