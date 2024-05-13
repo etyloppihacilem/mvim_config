@@ -4,7 +4,7 @@ scriptencoding utf-8
 set fillchars=fold:\ ,vert:\│,eob:\ ,msgsep:‾
 
 " Split window below/right when creating horizontal/vertical windows
-set splitbelow splitright
+set splitbelow nosplitright
 
 " Time in milliseconds to wait for a mapped sequence to complete,
 " see https://unix.stackexchange.com/q/36882/221410 for more info
@@ -180,5 +180,4 @@ set wrap  " wrap
 set noruler
 set background=dark
 
-set nosplitright
 set nofoldenable
