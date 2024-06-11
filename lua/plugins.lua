@@ -134,8 +134,14 @@ local plugin_specs = {
         cmd = "Telescope",
         module = 'telescope',
         dependencies = {
-        "nvim-telescope/telescope-symbols.nvim",
-        'nvim-lua/plenary.nvim',
+            "nvim-telescope/telescope-symbols.nvim",
+            {
+                "nvim-telescope/telescope-live-grep-args.nvim" ,
+                -- This will not install any breaking changes.
+                -- For major updates, this must be adjusted manually.
+                version = "^1.0.0",
+            },
+            'nvim-lua/plenary.nvim',
         },
         opts = function()
             return require('config.telescope')
@@ -144,6 +150,7 @@ local plugin_specs = {
             -- dofile("telescope")
             local telescope = require "telescope"
             telescope.setup(opts)
+            telescope.load_extension("live_grep_args")
         end,
         -- telescope
         keys = {
