@@ -241,7 +241,7 @@ keymap.set("n", "<leader>cb", function()
   end))
 end)
 
-keymap.set("n", "<leader>fg", "<cmd>Telescope live_grep<CR>", { desc = "telescope live grep" })
+keymap.set("n", "<leader>fg", "<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>", { desc = "telescope live grep" })
 keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<CR>", { desc = "telescope find buffers" })
 keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "telescope help page" })
 keymap.set("n", "<leader>ma", "<cmd>Telescope marks<CR>", { desc = "telescope find marks" })
