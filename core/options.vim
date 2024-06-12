@@ -68,7 +68,7 @@ set showbreak=↪
 set wildmode=list:longest
 
 " Minimum lines to keep above and below cursor when scrolling
-set scrolloff=3
+set scrolloff=1
 
 " Use mouse to select and resize windows, etc.
 set mouse=a  " Enable mouse in several mode
