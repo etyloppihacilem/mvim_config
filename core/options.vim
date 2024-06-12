@@ -73,7 +73,7 @@ set scrolloff=1
 " Use mouse to select and resize windows, etc.
 set mouse=a  " Enable mouse in several mode
 set mousemodel=popup  " Set the behaviour of mouse
-set mousescroll=ver:1,hor:0
+set mousescroll=ver:1,hor:1
 
 " Disable showing current mode on command line since statusline plugins can show it.
 set noshowmode
@@ -127,7 +127,7 @@ set winblend=0  " pseudo transparency for floating window
 " Insert mode key word completion setting
 set complete+=kspell complete-=w complete-=b complete-=u complete-=t
 
-set spelllang=en,cjk  " Spell languages
+set spelllang=en,fr,cjk  " Spell languages
 set spellsuggest+=9  " show 9 spell suggestions at most
 
 " Align indent to next multiple value of shiftwidth. For its meaning,
