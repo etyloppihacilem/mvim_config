@@ -23,19 +23,19 @@ conf.center = {
   {
     icon = "󰈞  ",
     desc = "Find  File                              ",
-    action = "Leaderf file --popup",
+    action = "Telescope find_files",
     key = "<Leader> f f",
   },
   {
     icon = "󰈢  ",
     desc = "Recently opened files                   ",
-    action = "Leaderf mru --popup",
+    action = "Telescope oldfiles",
     key = "<Leader> f r",
   },
   {
     icon = "󰈬  ",
     desc = "Project grep                            ",
-    action = "Leaderf rg --popup",
+    action = "lua require('telescope').extensions.live_grep_args.live_grep_args()",
     key = "<Leader> f g",
   },
   {
