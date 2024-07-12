@@ -61,13 +61,13 @@ def gen_header(filename, comment):
 	"""
 	WHALE = [
 		'       """  ',
-		"-\-    _|__",
-		" |\___/  . \\",
-		" \     /(((/",
-		"  \___/)))/ "
+        "-\\-    _|__",
+		" |\\___/  . \\",
+		" \\     /(((/",
+		"  \\___/)))/ "
 	]
 	ret = []
-	ret.append(comment[0] + " " + "#" * (80 - (1 + len(comment[0]))))
+	ret.append(comment[0] + " " + "#" * (WIDTH - (1 + len(comment[0]))))
 	if len(comment) == 1:
 		ret.append(comment[0])
 	else:
@@ -91,9 +91,9 @@ def gen_header(filename, comment):
 	else:
 		ret.append("")
 	if len(comment) == 1:
-		ret.append(comment[0] + " " + "#" * (80 - (1 + len(comment[0]))))
+		ret.append(comment[0] + " " + "#" * (WIDTH - (1 + len(comment[0]))))
 	else:
-		ret.append("#" * (80 - (1 + len(comment[0]))) + " " + comment[1])
+		ret.append("#" * (WIDTH - (1 + len(comment[0]))) + " " + comment[1])
 	ret.append("")
 	return ([i + "\n" for i in ret])
 
@@ -126,7 +126,7 @@ def run_header(filename):
 
 NAME = "hmelica"
 EMAIL = "hmelica@student.42.fr"
-WIDTH = 80
+WIDTH = 120
 
 if __name__ == "__main__":
 	if (len(sys.argv) <= 1):
