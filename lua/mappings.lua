@@ -253,3 +253,18 @@ keymap.set("n", "<leader>pt", "<cmd>Telescope terms<CR>", { desc = "telescope pi
 keymap.set("n", "<leader>th", "<cmd>Telescope themes<CR>", { desc = "telescope nvchad themes" })
 keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "telescope find files" })
 keymap.set("n", "<leader>fa", "<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>", { desc = "telescope find all files" })
+
+
+keymap.set("n", "]t", function()
+  require("todo-comments").jump_next()
+end, { desc = "Next todo comment" })
+
+keymap.set("n", "[t", function()
+  require("todo-comments").jump_prev()
+end, { desc = "Previous todo comment" })
+
+-- You can also specify a list of valid jump keywords
+
+keymap.set("n", "]t", function()
+  require("todo-comments").jump_next({keywords = { "ERROR", "WARNING" }})
+end, { desc = "Next error/warning todo comment" })
