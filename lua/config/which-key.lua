@@ -23,9 +23,9 @@ require("which-key").setup {
     group = "+", -- symbol prepended to a group
   },
   layout = {
-    height = { min = 1, max = 25 }, -- min and max height of the columns
-    width = { min = 20, max = 50 }, -- min and max width of the columns
-    spacing = 1, -- spacing between columns
+    height = { min = 1, max = 200 }, -- min and max height of the columns
+    width = { min = 20, max = 300 }, -- min and max width of the columns
+    spacing = 3, -- spacing between columns
     align = "center", -- align columns left, center or right
   },
   show_help = true, -- show help message on the command line when the popup is visible
