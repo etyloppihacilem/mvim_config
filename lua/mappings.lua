@@ -124,7 +124,7 @@ keymap.set("n", "/", [[/\v]])
 keymap.set("n", "<leader>cd", "<cmd>lcd %:p:h<cr><cmd>pwd<cr>", { desc = "change cwd" })
 
 -- Use Esc to quit builtin terminal
--- keymap.set("t", "<Esc>", [[<c-\><c-n>]])
+keymap.set("t", "<c-n>", [[<c-\><c-n>]], { desc = "Normal mode in terminal" })
 -- do not
 
 -- Toggle spell checking
