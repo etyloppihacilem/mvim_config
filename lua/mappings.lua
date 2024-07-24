@@ -268,3 +268,17 @@ end, { desc = "Previous todo comment" })
 keymap.set("n", "]t", function()
   require("todo-comments").jump_next({keywords = { "ERROR", "WARNING" }})
 end, { desc = "Next error/warning todo comment" })
+
+keymap.set("n", "<C-c>", function()
+  local buffers = vim.api.nvim_list_bufs()
+  for _, buf in ipairs(buffers) do
+    if vim.api.nvim_buf_is_loaded(buf) and not vim.api.nvim_get_option_value('readonly', { buf = buf }) then
+      local buf_windows = vim.fn.win_findbuf(buf)
+      -- Vérifie si le buffer n'est affiché dans aucune fenêtre
+      local buftype = vim.api.nvim_buf_get_option(buf, 'buftype')
+      if #buf_windows == 0 and buftype ~= 'terminal' then
+          vim.api.nvim_buf_delete(buf, {})
+      end
+    end
+  end
+end, { desc = "Closing all hidden buffers." })
