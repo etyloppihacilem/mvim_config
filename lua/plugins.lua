@@ -119,15 +119,6 @@ local plugin_specs = {
         require("config.hlslens")
         end,
     },
-    {
-        "Yggdroot/LeaderF",
-        cmd = "Leaderf",
-        build = function()
-        if not vim.g.is_win then
-            vim.cmd(":LeaderfInstallCExtension")
-        end
-        end,
-    },
     "nvim-lua/plenary.nvim",
     {
         "nvim-telescope/telescope.nvim",
