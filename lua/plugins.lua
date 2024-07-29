@@ -28,7 +28,7 @@ local plugin_specs = {
     dependencies = {
       "hrsh7th/cmp-nvim-lsp",
       "onsails/lspkind-nvim",
-      "hrsh7th/cmp-path",
+      "https://codeberg.org/FelipeLema/cmp-async-path.git",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-omni",
       "hrsh7th/cmp-emoji",

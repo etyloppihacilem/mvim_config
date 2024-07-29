@@ -33,7 +33,7 @@ cmp.setup {
   sources = {
     { name = "nvim_lsp" }, -- For nvim-lsp
     { name = "luasnip" }, -- For luasnip user.
-    { name = "path" }, -- for path completion
+    { name = "async_path" }, -- for path completion
     { name = "buffer", keyword_length = 2 }, -- for buffer word completion
     { name = "emoji", insert = true }, -- emoji completion
   },
@@ -65,7 +65,7 @@ cmp.setup.filetype("tex", {
     { name = "omni" },
     { name = "luasnip" }, -- For luasnip user.
     { name = "buffer", keyword_length = 2 }, -- for buffer word completion
-    { name = "path" }, -- for path completion
+    { name = "async_pat" }, -- for path completion
   },
 })
 
