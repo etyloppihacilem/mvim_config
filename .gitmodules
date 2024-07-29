@@ -1,3 +1,0 @@
-[submodule "uncrustify"]
-	path = uncrustify
-	url = https://github.com/uncrustify/uncrustify.git

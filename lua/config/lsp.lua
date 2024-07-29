@@ -12,10 +12,10 @@ local set_qflist = function(buf_num, severity)
   diagnostics = diagnostic.get(buf_num, { severity = severity })
 
   local qf_items = diagnostic.toqflist(diagnostics)
-  vim.fn.setqflist({}, ' ', { title = 'Diagnostics', items = qf_items })
+  vim.fn.setqflist({}, " ", { title = "Diagnostics", items = qf_items })
 
   -- open quickfix by default
-  vim.cmd[[copen]]
+  vim.cmd([[copen]])
 end
 
 local custom_attach = function(client, bufnr)
@@ -38,7 +38,9 @@ local custom_attach = function(client, bufnr)
   -- this puts diagnostics from opened files to quickfix
   map("n", "<space>qw", diagnostic.setqflist, { desc = "put window diagnostics to qf" })
   -- this puts diagnostics from current buffer to quickfix
-  map("n", "<space>qb", function() set_qflist(bufnr) end, { desc = "put buffer diagnostics to qf" })
+  map("n", "<space>qb", function()
+    set_qflist(bufnr)
+  end, { desc = "put buffer diagnostics to qf" })
   map("n", "<space>ca", vim.lsp.buf.code_action, { desc = "LSP code action" })
   map("n", "<space>wa", vim.lsp.buf.add_workspace_folder, { desc = "add workspace folder" })
   map("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, { desc = "remove workspace folder" })
@@ -68,8 +70,9 @@ local custom_attach = function(client, bufnr)
       end
 
       local cursor_pos = api.nvim_win_get_cursor(0)
-      if (cursor_pos[1] ~= vim.b.diagnostics_pos[1] or cursor_pos[2] ~= vim.b.diagnostics_pos[2])
-          and #diagnostic.get() > 0
+      if
+        (cursor_pos[1] ~= vim.b.diagnostics_pos[1] or cursor_pos[2] ~= vim.b.diagnostics_pos[2])
+        and #diagnostic.get() > 0
       then
         diagnostic.open_float(nil, float_opts)
       end
@@ -87,20 +90,20 @@ local custom_attach = function(client, bufnr)
     ]])
 
     local gid = api.nvim_create_augroup("lsp_document_highlight", { clear = true })
-    api.nvim_create_autocmd("CursorHold" , {
+    api.nvim_create_autocmd("CursorHold", {
       group = gid,
       buffer = bufnr,
-      callback = function ()
+      callback = function()
         lsp.buf.document_highlight()
-      end
+      end,
     })
 
-    api.nvim_create_autocmd("CursorMoved" , {
+    api.nvim_create_autocmd("CursorMoved", {
       group = gid,
       buffer = bufnr,
-      callback = function ()
+      callback = function()
         lsp.buf.clear_references()
-      end
+      end,
     })
   end
 
@@ -110,12 +113,12 @@ local custom_attach = function(client, bufnr)
   end
 end
 
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 local lspconfig = require("lspconfig")
 
 if utils.executable("pylsp") then
-  local venv_path = os.getenv('VIRTUAL_ENV')
+  local venv_path = os.getenv("VIRTUAL_ENV")
   local py_path = nil
   -- decide which python executable to use for mypy
   if venv_path ~= nil then
@@ -158,14 +161,14 @@ if utils.executable("pylsp") then
   --   },
   --   capabilities = capabilities,
   -- }
-  lspconfig.pyright.setup{
-      on_attach = custom_attach,
-      capabilities = capabilities,
-      settings ={
-        python = {
-            pythonPath = py_path,
-        },
+  lspconfig.pyright.setup {
+    on_attach = custom_attach,
+    capabilities = capabilities,
+    settings = {
+      python = {
+        pythonPath = py_path,
       },
+    },
   }
 else
   vim.notify("pylsp not found!", vim.log.levels.WARN, { title = "Nvim-config" })
@@ -187,16 +190,16 @@ if utils.executable("ltex-ls") then
     filetypes = { "text", "plaintex", "tex", "markdown" },
     settings = {
       ltex = {
-        language = "en"
+        language = "en",
       },
     },
     flags = { debounce_text_changes = 300 },
-}
+  }
 end
 
 if utils.executable("clangd") then
   lspconfig.clangd.setup {
-    cmd = {"clangd", "--enable-config", "--offset-encoding=utf-16"},
+    cmd = { "clangd", "--enable-config", "--offset-encoding=utf-16" },
     on_attach = custom_attach,
     capabilities = capabilities,
     filetypes = { "c", "cpp", "cc" },
@@ -259,10 +262,10 @@ if utils.executable("lua-language-server") then
 end
 
 -- Change diagnostic signs.
-fn.sign_define("DiagnosticSignError", { text = '🆇', texthl = "DiagnosticSignError" })
-fn.sign_define("DiagnosticSignWarn", { text = '', texthl = "DiagnosticSignWarn" })
-fn.sign_define("DiagnosticSignInfo", { text = '', texthl = "DiagnosticSignInfo" })
-fn.sign_define("DiagnosticSignHint", { text = '', texthl = "DiagnosticSignHint" })
+fn.sign_define("DiagnosticSignError", { text = "🆇", texthl = "DiagnosticSignError" })
+fn.sign_define("DiagnosticSignWarn", { text = "", texthl = "DiagnosticSignWarn" })
+fn.sign_define("DiagnosticSignInfo", { text = "", texthl = "DiagnosticSignInfo" })
+fn.sign_define("DiagnosticSignHint", { text = "", texthl = "DiagnosticSignHint" })
 
 -- global config for diagnostic
 diagnostic.config {

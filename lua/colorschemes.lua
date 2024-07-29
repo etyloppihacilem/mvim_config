@@ -98,16 +98,16 @@ end
 
 M.onedarkpro = function()
   -- set colorscheme after options
-  vim.cmd('colorscheme onedark_vivid')
+  vim.cmd("colorscheme onedark_vivid")
 end
 
 M.monokai = function()
-  vim.cmd('colorscheme monokai_pro')
+  vim.cmd("colorscheme monokai_pro")
 end
 
-M.material = function ()
+M.material = function()
   vim.g.material_style = "oceanic"
-  vim.cmd('colorscheme material')
+  vim.cmd("colorscheme material")
 end
 
 --- Use a random colorscheme from the pre-defined list of colorschemes.

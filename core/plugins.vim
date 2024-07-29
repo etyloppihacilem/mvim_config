@@ -157,27 +157,6 @@ let g:better_escape_interval = 200
 """"""""""""""""""""""""""""vim-xkbswitch settings"""""""""""""""""""""""""
 let g:XkbSwitchEnabled = 1
 
-"""""""""""""""""""""""""""""" neoformat settings """""""""""""""""""""""
-let g:neoformat_enabled_python = ['black', 'yapf']
-let g:neoformat_verbose = 0 " debug
-let g:neoformat_cpp_uncrustify = {
-      \ 'exe': stdpath("config") . '/uncrustify/build/uncrustify',
-      \ 'args': ['-c ' . stdpath('config') . "/formatter_config/c.cfg", "-l CPP"],
-      \ 'replace': 0,
-      \ 'stdin': 1,
-      \ 'no_append': 1
-      \ }
-let g:neoformat_c_uncrustify = {
-      \ 'exe': stdpath("config") . '/uncrustify/build/uncrustify',
-      \ 'args': ['-c ' . stdpath('config') . "/formatter_config/c.cfg -l C"],
-      \ 'replace': 0,
-      \ 'stdin': 1,
-      \ 'no_append': 1
-      \ }
-
-let g:neoformat_enabled_cpp = ['uncrustify']
-let g:neoformat_enabled_c = ['uncrustify']
-
 """""""""""""""""""""""""vim-markdown settings"""""""""""""""""""
 " Disable header folding
 let g:vim_markdown_folding_disabled = 1

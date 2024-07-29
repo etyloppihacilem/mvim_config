@@ -3,13 +3,15 @@ local api = vim.api
 local uv = vim.loop
 
 -- header
-keymap.set({"n", "i"}, "<F1>", ":!python3 " .. header_script .. " %<CR>")
+keymap.set({ "n", "i" }, "<F1>", ":!python3 " .. header_script .. " %<CR>")
 
 -- quick fix
 keymap.set("n", "<leader>cf", ":lua vim.lsp.buf.code_action()<CR>", { silent = true, desc = "LSP code action (fix)" })
 
 -- format
-keymap.set({"n", "i"}, "<c-e>", ":Neoformat<CR>", { desc = "Autoformat with uncrustify" })
+keymap.set({ "n", "i" }, "<c-e>", function()
+  require("conform").format()
+end, { desc = "Autoformat " })
 
 -- Save key strokes (now we do not need to press shift to enter command mode).
 keymap.set({ "n", "x" }, ";", ":")
@@ -100,7 +102,7 @@ keymap.set("n", "<leader>sv", function()
       update $MYVIMRC
       source $MYVIMRC
     ]])
-    require("config.luasnip").loaders()
+  require("config.luasnip").loaders()
   vim.notify("Nvim config successfully reloaded!", vim.log.levels.INFO, { title = "nvim-config" })
 end, {
   silent = true,
@@ -227,33 +229,51 @@ keymap.set("n", "<leader>cb", function()
   local blink_times = 7
   local timer = uv.new_timer()
 
-  timer:start(0, 100, vim.schedule_wrap(function()
-    vim.cmd[[
+  timer:start(
+    0,
+    100,
+    vim.schedule_wrap(function()
+      vim.cmd([[
       set cursorcolumn!
       set cursorline!
-    ]]
+    ]])
 
-    if cnt == blink_times then
-      timer:close()
-    end
+      if cnt == blink_times then
+        timer:close()
+      end
 
-    cnt = cnt + 1
-  end))
+      cnt = cnt + 1
+    end)
+  )
 end)
 
-keymap.set("n", "<leader>fg", "<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>", { desc = "telescope live grep" })
+keymap.set(
+  "n",
+  "<leader>fg",
+  "<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>",
+  { desc = "telescope live grep" }
+)
 keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<CR>", { desc = "telescope find buffers" })
 keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "telescope help page" })
 keymap.set("n", "<leader>ma", "<cmd>Telescope marks<CR>", { desc = "telescope find marks" })
 keymap.set("n", "<leader>fo", "<cmd>Telescope oldfiles<CR>", { desc = "telescope find oldfiles" })
-keymap.set("n", "<leader>fz", "<cmd>Telescope current_buffer_fuzzy_find<CR>", { desc = "telescope find in current buffer" })
+keymap.set(
+  "n",
+  "<leader>fz",
+  "<cmd>Telescope current_buffer_fuzzy_find<CR>",
+  { desc = "telescope find in current buffer" }
+)
 keymap.set("n", "<leader>cm", "<cmd>Telescope git_commits<CR>", { desc = "telescope git commits" })
 keymap.set("n", "<leader>gt", "<cmd>Telescope git_status<CR>", { desc = "telescope git status" })
 keymap.set("n", "<leader>pt", "<cmd>Telescope terms<CR>", { desc = "telescope pick hidden term" })
 keymap.set("n", "<leader>th", "<cmd>Telescope themes<CR>", { desc = "telescope nvchad themes" })
 keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "telescope find files" })
-keymap.set("n", "<leader>fa", "<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>", { desc = "telescope find all files" })
-
+keymap.set(
+  "n",
+  "<leader>fa",
+  "<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>",
+  { desc = "telescope find all files" }
+)
 
 keymap.set("n", "]t", function()
   require("todo-comments").jump_next()
@@ -266,18 +286,18 @@ end, { desc = "Previous todo comment" })
 -- You can also specify a list of valid jump keywords
 
 keymap.set("n", "]t", function()
-  require("todo-comments").jump_next({keywords = { "ERROR", "WARNING" }})
+  require("todo-comments").jump_next { keywords = { "ERROR", "WARNING" } }
 end, { desc = "Next error/warning todo comment" })
 
 keymap.set("n", "<C-c>", function()
   local buffers = vim.api.nvim_list_bufs()
   for _, buf in ipairs(buffers) do
-    if vim.api.nvim_buf_is_loaded(buf) and not vim.api.nvim_get_option_value('readonly', { buf = buf }) then
+    if vim.api.nvim_buf_is_loaded(buf) and not vim.api.nvim_get_option_value("readonly", { buf = buf }) then
       local buf_windows = vim.fn.win_findbuf(buf)
       -- Vérifie si le buffer n'est affiché dans aucune fenêtre
-      local buftype = vim.api.nvim_buf_get_option(buf, 'buftype')
-      if #buf_windows == 0 and buftype ~= 'terminal' then
-          vim.api.nvim_buf_delete(buf, {})
+      local buftype = vim.api.nvim_buf_get_option(buf, "buftype")
+      if #buf_windows == 0 and buftype ~= "terminal" then
+        vim.api.nvim_buf_delete(buf, {})
       end
     end
   end
