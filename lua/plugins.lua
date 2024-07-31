@@ -682,5 +682,6 @@ require("conform").setup {
     -- Conform will run multiple formatters sequentially
     python = { "isort", "black" },
     cpp = { "clang-format" },
+    c = { "clang-format" },
   },
 }
