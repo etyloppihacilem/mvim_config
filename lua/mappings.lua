@@ -1,5 +1,5 @@
 local keymap = vim.keymap
-local api = vim.api
+-- local api = vim.api
 local uv = vim.loop
 
 -- header
@@ -302,3 +302,5 @@ keymap.set("n", "<C-c>", function()
     end
   end
 end, { desc = "Closing all hidden buffers." })
+
+keymap.set("n", "<F5>", "<cmd>tabe %<CR><cmd>packadd termdebug<CR><cmd>Termdebug<CR>", { desc = "Run debug tool." })
