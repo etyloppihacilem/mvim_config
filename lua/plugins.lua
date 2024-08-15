@@ -683,5 +683,6 @@ require("conform").setup {
     python = { "isort", "black" },
     cpp = { "clang-format" },
     c = { "clang-format" },
+    sh = { "beautysh" },
   },
 }
