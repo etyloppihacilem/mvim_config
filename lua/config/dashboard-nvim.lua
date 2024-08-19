@@ -4,25 +4,18 @@ local dashboard = require("dashboard")
 
 local conf = {}
 conf.header = {
-  "                                                       ",
-  "                                                       ",
-  "                                                       ",
-  " ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗",
-  " ████╗  ██║ ██╔════╝██╔═══██╗ ██║   ██║ ██║ ████╗ ████║",
-  " ██╔██╗ ██║ █████╗  ██║   ██║ ██║   ██║ ██║ ██╔████╔██║",
-  " ██║╚██╗██║ ██╔══╝  ██║   ██║ ╚██╗ ██╔╝ ██║ ██║╚██╔╝██║",
-  " ██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║",
-  " ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝",
-  "                                                       ",
-  "                                                       ",
-  "                                                       ",
-  "                                                       ",
+  "    _   __         _    ___         ",
+  "   / | / /__  ____| |  / (_)___ ___ ",
+  "  /  |/ / _ \\/ __ \\ | / / / __ `__ \\",
+  " / /|  /  __/ /_/ / |/ / / / / / / /",
+  "/_/ |_/\\___/\\____/|___/_/_/ /_/ /_/ ",
+  "                                    ",
 }
 
 conf.center = {
   {
     icon = "󰈞  ",
-    desc = "Find  File                              ",
+    desc = "Find File                               ",
     action = "Telescope find_files",
     key = "<Leader> f f",
   },
@@ -37,6 +30,18 @@ conf.center = {
     desc = "Project grep                            ",
     action = "lua require('telescope').extensions.live_grep_args.live_grep_args()",
     key = "<Leader> f g",
+  },
+  {
+    icon = "  ",
+    desc = "Project Todos                           ",
+    action = "TodoTelescope",
+    key = "<Leader> f t",
+  },
+  {
+    icon = "  ",
+    desc = "Show file tree                          ",
+    action = "lua require('nvim-tree.api').tree.toggle()",
+    key = "<Space> s",
   },
   {
     icon = "  ",
@@ -59,10 +64,20 @@ conf.center = {
   },
 }
 
+local preview = {
+  preview = {
+    command = "cat",
+    file_path = vim.fn.stdpath("config") .. "dashboard-ansi.txt",
+    file_width = 36,
+    file_height = 6,
+  },
+}
+
 dashboard.setup {
   theme = "doom",
   shortcut_type = "number",
   config = conf,
+  preview = preview,
 }
 
 api.nvim_create_autocmd("FileType", {
