@@ -274,6 +274,7 @@ keymap.set(
   "<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>",
   { desc = "telescope find all files" }
 )
+keymap.set("n", "<leader>ft", "<cmd>TodoTelescope<cr>", { desc = "telescope find todos" })
 
 keymap.set("n", "]t", function()
   require("todo-comments").jump_next()
