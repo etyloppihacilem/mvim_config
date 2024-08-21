@@ -273,7 +273,8 @@ local plugin_specs = {
   { "Raimondi/delimitMate", event = "InsertEnter" },
 
   -- Comment plugin
-  { "tpope/vim-commentary", event = "VeryLazy" },
+  -- { "tpope/vim-commentary", event = "VeryLazy" },
+  { "numToStr/Comment.nvim", event = "VeryLazy" },
 
   -- Multiple cursor plugin like Sublime Text?
   -- 'mg979/vim-visual-multi'
