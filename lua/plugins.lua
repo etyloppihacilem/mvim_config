@@ -685,5 +685,8 @@ require("conform").setup {
     cpp = { "clang-format" },
     c = { "clang-format" },
     sh = { "beautysh" },
+    html = { "prettier" },
+    js = { "prettier" },
+    css = { "prettier" },
   },
 }

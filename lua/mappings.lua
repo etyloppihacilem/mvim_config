@@ -10,7 +10,7 @@ keymap.set("n", "<leader>cf", ":lua vim.lsp.buf.code_action()<CR>", { silent = t
 
 -- format
 keymap.set({ "n", "i" }, "<c-e>", function()
-  require("conform").format()
+  require("conform").format { async = true, lsp_fallback = true }
 end, { desc = "Autoformat " })
 
 -- Save key strokes (now we do not need to press shift to enter command mode).
