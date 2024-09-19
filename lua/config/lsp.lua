@@ -230,19 +230,19 @@ if utils.executable("bash-language-server") then
     }
 end
 
-if utils.executable("html-languageserver") then
-    lspconfig.html.setup {
-        on_attach = custom_attach,
-        capabilities = capabilities,
-    }
-end
-
-if utils.executable("vscode-eslint-language-server") then
-    lspconfig.javascript.setup {
-        on_attach = custom_attach,
-        capabilities = capabilities,
-    }
-end
+-- if utils.executable("html-languageserver") then
+--     lspconfig.html.setup {
+--         on_attach = custom_attach,
+--         capabilities = capabilities,
+--     }
+-- end
+--
+-- if utils.executable("vscode-eslint-language-server") then
+--     lspconfig.javascript.setup {
+--         on_attach = custom_attach,
+--         capabilities = capabilities,
+--     }
+-- end
 
 if utils.executable("lua-language-server") then
     -- settings for lua-language-server can be found on https://github.com/LuaLS/lua-language-server/wiki/Settings .

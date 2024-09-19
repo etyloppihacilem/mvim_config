@@ -112,3 +112,8 @@ vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
   pattern = "*.tpp",
   command = "set filetype=hpp"
 })
+
+vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
+  pattern = "*.md",
+  command = "set textwidth=120"
+})
