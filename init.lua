@@ -26,6 +26,8 @@ local actual_ver = version()
 
 vim.env.PATH = vim.fn.stdpath("config") .. '/venv_nvim/bin:/mnt/nfs/homes/hmelica/tools/node-v14.15.4-linux-x64/bin:' .. vim.env.PATH
 
+vim.g.python3_host_prog = vim.fn.stdpath("config") .. '/venv_nvim/bin/python3'
+
 local core_conf_files = {
   "globals.lua", -- some global settings
   "options.vim", -- setting options in nvim

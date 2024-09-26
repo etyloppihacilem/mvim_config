@@ -498,11 +498,18 @@ local plugin_specs = {
   },
 
   -- The missing auto-completion for cmdline!
+  -- {
+  --   "gelguy/wilder.nvim",
+  --   build = ":UpdateRemotePlugins",
+  -- },
   {
-    "gelguy/wilder.nvim",
-    build = ":UpdateRemotePlugins",
+    "hrsh7th/cmp-buffer",
+    lazy = false,
   },
-
+  {
+    "hrsh7th/cmp-cmdline",
+    lazy = false,
+  },
   -- showing keybindings
   {
     "folke/which-key.nvim",
