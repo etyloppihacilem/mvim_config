@@ -22,11 +22,14 @@ end
 local plugin_specs = {
     -- auto-completion engine
     {
-        "hrsh7th/nvim-cmp",
+        -- "hrsh7th/nvim-cmp",
+        "iguanacucumber/magazine.nvim",
+        name = "nvim-cmp",
         -- event = 'InsertEnter',
         event = "VeryLazy",
         dependencies = {
             "hrsh7th/cmp-nvim-lsp",
+            "hrsh7th/cmp-cmdline",
             "onsails/lspkind-nvim",
             "https://codeberg.org/FelipeLema/cmp-async-path.git",
             "hrsh7th/cmp-buffer",
@@ -506,14 +509,18 @@ local plugin_specs = {
     --   "gelguy/wilder.nvim",
     --   build = ":UpdateRemotePlugins",
     -- },
-    {
-        "hrsh7th/cmp-buffer",
-        lazy = false,
-    },
-    {
-        "hrsh7th/cmp-cmdline",
-        lazy = false,
-    },
+    -- {
+    --     "hrsh7th/cmp-buffer",
+    --     lazy = false,
+    -- },
+    -- {
+    --     "hrsh7th/cmp-cmdline",
+    --     lazy = false,
+    -- },
+    -- {
+    --     "hrsh7th/cmp-nvim-lsp", -- Source LSP pour nvim-cmp
+    --     lazy = true,
+    -- },
     -- showing keybindings
     {
         "folke/which-key.nvim",
