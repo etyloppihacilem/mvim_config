@@ -3,10 +3,8 @@ if exists(':AsyncRun')
 endif
 
 " Do not wrap Python source code.
-set nowrap
-set sidescroll=5
-set sidescrolloff=2
-set colorcolumn=200
+set wrap
+set colorcolumn=120
 
 set tabstop=4       " number of visual spaces per TAB
 set softtabstop=4   " number of spaces in tab when editing
