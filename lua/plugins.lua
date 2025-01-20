@@ -708,6 +708,8 @@ require("conform").setup {
     sh = { "beautysh" },
     html = { "prettier" },
     javascript = { "prettier" },
+    typescript = { "prettier" },
     css = { "prettier" },
+    json = { "prettier" },
   },
 }

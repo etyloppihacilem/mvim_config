@@ -209,6 +209,18 @@ if utils.executable("clangd") then
     }
 end
 
+if utils.executable("vscode-eslint-language-server") then
+    lspconfig.eslint.setup {
+        cmd = { 'vscode-eslint-language-server', '--stdio' },
+        on_attach = custom_attach,
+        capabilities = capabilities,
+        filetypes = { "javascript", "json", "typescript" },
+        flags = {
+            debounce_text_changes = 500,
+        },
+    }
+end
+
 -- set up vim-language-server
 if utils.executable("vim-language-server") then
     lspconfig.vimls.setup {
