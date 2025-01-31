@@ -132,6 +132,22 @@ require("mason-lspconfig").setup_handlers {
   -- ["rust_analyzer"] = function()
   --   require("rust-tools").setup {}
   -- end,
+  ["pyright"] = function()
+    require("lspconfig")["pyright"].setup {
+      on_attach = custom_attach,
+      capabilities = capabilities,
+      pyright = {
+        -- Using Ruff's import organizer
+        disableOrganizeImports = true,
+      },
+      python = {
+        analysis = {
+          -- Ignore all files for analysis to exclusively use Ruff for linting
+          ignore = { "*" },
+        },
+      },
+    }
+  end,
 }
 
 -- -- if utils.executable("pylsp") then

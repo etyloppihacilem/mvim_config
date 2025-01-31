@@ -694,8 +694,18 @@ local lazy_opts = {
 }
 
 require("lazy").setup(plugin_specs, lazy_opts)
-require("mason").setup()
-require("mason-lspconfig").setup()
+require("mason").setup({
+    ensure_installed = {
+        "prettier",
+        "stylua"
+    },
+})
+require("mason-lspconfig").setup({
+    ensure_installed = {
+        "ruff",
+        "pylsp",
+    },
+})
 
 require("Comment").setup()
 -- require("luasnip.loaders.from_vscode").lazy_load()
