@@ -115,184 +115,201 @@ end
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-local lspconfig = require("lspconfig")
+-- local lspconfig = require("lspconfig")
 
-if utils.executable("pylsp") then
-    local venv_path = os.getenv("VIRTUAL_ENV")
-    local py_path = nil
-    -- decide which python executable to use for mypy
-    if venv_path ~= nil then
-        py_path = venv_path .. "/bin/python3"
-    else
-        py_path = vim.g.python3_host_prog
-    end
-
-    -- lspconfig.pylsp.setup {
-    --   on_attach = custom_attach,
-    --   settings = {
-    --     pylsp = {
-    --       plugins = {
-    --         -- formatter options
-    --         -- flake8 = { enabled = false },
-    --         black = { enabled = false },
-    --         autopep8 = { enabled = false },
-    --         yapf = { enabled = false },
-    --         -- linter options
-    --         pylint = { enabled = false, executable = "pylint" },
-    --         ruff = { enabled = false },
-    --         pyflakes = { enabled = false },
-    --         pycodestyle = { enabled = false },
-    --         -- type checker
-    --         pylsp_mypy = {
-    --           enabled = false,
-    --           overrides = { "--python-executable", py_path, true },
-    --           report_progress = true,
-    --           live_mode = false
-    --         },
-    --         -- auto-completion options
-    --         jedi_completion = { fuzzy = true },
-    --         -- import sorting
-    --         isort = { enabled = false },
-    --       },
-    --     },
-    --   },
-    --   flags = {
-    --     debounce_text_changes = 1000,
-    --   },
-    --   capabilities = capabilities,
-    -- }
-    lspconfig.pyright.setup {
-        on_attach = custom_attach,
-        capabilities = capabilities,
-        settings = {
-            python = {
-                pythonPath = py_path,
-            },
-        },
+require("mason-lspconfig").setup_handlers {
+  -- The first entry (without a key) will be the default handler
+  -- and will be called for each installed server that doesn't have
+  -- a dedicated handler.
+  function(server_name) -- default handler (optional)
+    require("lspconfig")[server_name].setup {
+      on_attach = custom_attach,
+      capabilities = capabilities,
     }
-else
-    vim.notify("pylsp not found!", vim.log.levels.WARN, { title = "Nvim-config" })
-end
+  end,
+  -- Next, you can provide a dedicated handler for specific servers.
+  -- For example, a handler override for the `rust_analyzer`:
+  -- ["rust_analyzer"] = function()
+  --   require("rust-tools").setup {}
+  -- end,
+}
 
--- if utils.executable('pyright') then
---   lspconfig.pyright.setup{
---     on_attach = custom_attach,
---     capabilities = capabilities
---   }
--- else
---   vim.notify("pyright not found!", vim.log.levels.WARN, {title = 'Nvim-config'})
+-- -- if utils.executable("pylsp") then
+-- --     local venv_path = os.getenv("VIRTUAL_ENV")
+-- --     local py_path = nil
+-- --     -- decide which python executable to use for mypy
+-- --     if venv_path ~= nil then
+-- --         py_path = venv_path .. "/bin/python3"
+-- --     else
+-- --         py_path = vim.g.python3_host_prog
+-- --     end
+-- --
+-- --     -- lspconfig.pylsp.setup {
+-- --     --   on_attach = custom_attach,
+-- --     --   settings = {
+-- --     --     pylsp = {
+-- --     --       plugins = {
+-- --     --         -- formatter options
+-- --     --         -- flake8 = { enabled = false },
+-- --     --         black = { enabled = false },
+-- --     --         autopep8 = { enabled = false },
+-- --     --         yapf = { enabled = false },
+-- --     --         -- linter options
+-- --     --         pylint = { enabled = false, executable = "pylint" },
+-- --     --         ruff = { enabled = false },
+-- --     --         pyflakes = { enabled = false },
+-- --     --         pycodestyle = { enabled = false },
+-- --     --         -- type checker
+-- --     --         pylsp_mypy = {
+-- --     --           enabled = false,
+-- --     --           overrides = { "--python-executable", py_path, true },
+-- --     --           report_progress = true,
+-- --     --           live_mode = false
+-- --     --         },
+-- --     --         -- auto-completion options
+-- --     --         jedi_completion = { fuzzy = true },
+-- --     --         -- import sorting
+-- --     --         isort = { enabled = false },
+-- --     --       },
+-- --     --     },
+-- --     --   },
+-- --     --   flags = {
+-- --     --     debounce_text_changes = 1000,
+-- --     --   },
+-- --     --   capabilities = capabilities,
+-- --     -- }
+-- --     lspconfig.pyright.setup {
+-- --         on_attach = custom_attach,
+-- --         capabilities = capabilities,
+-- --         settings = {
+-- --             python = {
+-- --                 pythonPath = py_path,
+-- --             },
+-- --         },
+-- --     }
+-- -- else
+-- --     vim.notify("pylsp not found!", vim.log.levels.WARN, { title = "Nvim-config" })
+-- -- end
+--
+-- -- if utils.executable('pyright') then
+-- --   lspconfig.pyright.setup{
+-- --     on_attach = custom_attach,
+-- --     capabilities = capabilities
+-- --   }
+-- -- else
+-- --   vim.notify("pyright not found!", vim.log.levels.WARN, {title = 'Nvim-config'})
+-- -- end
+--
+-- if utils.executable("ltex-ls") then
+--     lspconfig.ltex.setup {
+--         on_attach = custom_attach,
+--         cmd = { "ltex-ls" },
+--         filetypes = { "text", "plaintex", "tex", "markdown" },
+--         settings = {
+--             ltex = {
+--                 language = "en",
+--             },
+--         },
+--         flags = { debounce_text_changes = 300 },
+--     }
 -- end
-
-if utils.executable("ltex-ls") then
-    lspconfig.ltex.setup {
-        on_attach = custom_attach,
-        cmd = { "ltex-ls" },
-        filetypes = { "text", "plaintex", "tex", "markdown" },
-        settings = {
-            ltex = {
-                language = "en",
-            },
-        },
-        flags = { debounce_text_changes = 300 },
-    }
-end
-
-if utils.executable("clangd") then
-    lspconfig.clangd.setup {
-        cmd = { "clangd", "--enable-config", "--offset-encoding=utf-16" },
-        on_attach = custom_attach,
-        capabilities = capabilities,
-        filetypes = { "c", "cpp", "cc" },
-        flags = {
-            debounce_text_changes = 500,
-        },
-    }
-end
-
-if utils.executable("vscode-eslint-language-server") then
-    lspconfig.eslint.setup {
-        cmd = { 'vscode-eslint-language-server', '--stdio' },
-        on_attach = custom_attach,
-        capabilities = capabilities,
-        filetypes = { "javascript", "json", "typescript" },
-        flags = {
-            debounce_text_changes = 500,
-        },
-    }
-end
-
--- set up vim-language-server
-if utils.executable("vim-language-server") then
-    lspconfig.vimls.setup {
-        on_attach = custom_attach,
-        flags = {
-            debounce_text_changes = 500,
-        },
-        capabilities = capabilities,
-    }
-else
-    vim.notify("vim-language-server not found!", vim.log.levels.WARN, { title = "Nvim-config" })
-end
-
--- set up bash-language-server
-if utils.executable("bash-language-server") then
-    lspconfig.bashls.setup {
-        on_attach = custom_attach,
-        capabilities = capabilities,
-    }
-end
-
--- if utils.executable("html-languageserver") then
---     lspconfig.html.setup {
+--
+-- if utils.executable("clangd") then
+--     lspconfig.clangd.setup {
+--         cmd = { "clangd", "--enable-config", "--offset-encoding=utf-16" },
+--         on_attach = custom_attach,
+--         capabilities = capabilities,
+--         filetypes = { "c", "cpp", "cc" },
+--         flags = {
+--             debounce_text_changes = 500,
+--         },
+--     }
+-- end
+--
+-- if utils.executable("vscode-eslint-language-server") then
+--     lspconfig.eslint.setup {
+--         cmd = { 'vscode-eslint-language-server', '--stdio' },
+--         on_attach = custom_attach,
+--         capabilities = capabilities,
+--         filetypes = { "javascript", "json", "typescript" },
+--         flags = {
+--             debounce_text_changes = 500,
+--         },
+--     }
+-- end
+--
+-- -- set up vim-language-server
+-- if utils.executable("vim-language-server") then
+--     lspconfig.vimls.setup {
+--         on_attach = custom_attach,
+--         flags = {
+--             debounce_text_changes = 500,
+--         },
+--         capabilities = capabilities,
+--     }
+-- else
+--     vim.notify("vim-language-server not found!", vim.log.levels.WARN, { title = "Nvim-config" })
+-- end
+--
+-- -- set up bash-language-server
+-- if utils.executable("bash-language-server") then
+--     lspconfig.bashls.setup {
 --         on_attach = custom_attach,
 --         capabilities = capabilities,
 --     }
 -- end
 --
--- if utils.executable("vscode-eslint-language-server") then
---     lspconfig.javascript.setup {
+-- -- if utils.executable("html-languageserver") then
+-- --     lspconfig.html.setup {
+-- --         on_attach = custom_attach,
+-- --         capabilities = capabilities,
+-- --     }
+-- -- end
+-- --
+-- -- if utils.executable("vscode-eslint-language-server") then
+-- --     lspconfig.javascript.setup {
+-- --         on_attach = custom_attach,
+-- --         capabilities = capabilities,
+-- --     }
+-- -- end
+--
+-- if utils.executable("lua-language-server") then
+--     -- settings for lua-language-server can be found on https://github.com/LuaLS/lua-language-server/wiki/Settings .
+--     lspconfig.lua_ls.setup {
+--         on_attach = custom_attach,
+--         settings = {
+--             Lua = {
+--                 runtime = {
+--                     -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+--                     version = "LuaJIT",
+--                 },
+--                 diagnostics = {
+--                     -- Get the language server to recognize the `vim` global
+--                     globals = { "vim" },
+--                 },
+--                 workspace = {
+--                     -- Make the server aware of Neovim runtime files,
+--                     -- see also https://github.com/LuaLS/lua-language-server/wiki/Libraries#link-to-workspace .
+--                     -- Lua-dev.nvim also has similar settings for lua ls, https://github.com/folke/neodev.nvim/blob/main/lua/neodev/luals.lua .
+--                     library = {
+--                         fn.stdpath("data") .. "/lazy/emmylua-nvim",
+--                         fn.stdpath("config"),
+--                     },
+--                     maxPreload = 2000,
+--                     preloadFileSize = 50000,
+--                 },
+--             },
+--         },
+--         capabilities = capabilities,
+--     }
+-- end
+--
+-- if utils.executable("nginx-language-server") then
+--     require 'lspconfig'.nginx_language_server.setup {
 --         on_attach = custom_attach,
 --         capabilities = capabilities,
 --     }
 -- end
-
-if utils.executable("lua-language-server") then
-    -- settings for lua-language-server can be found on https://github.com/LuaLS/lua-language-server/wiki/Settings .
-    lspconfig.lua_ls.setup {
-        on_attach = custom_attach,
-        settings = {
-            Lua = {
-                runtime = {
-                    -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-                    version = "LuaJIT",
-                },
-                diagnostics = {
-                    -- Get the language server to recognize the `vim` global
-                    globals = { "vim" },
-                },
-                workspace = {
-                    -- Make the server aware of Neovim runtime files,
-                    -- see also https://github.com/LuaLS/lua-language-server/wiki/Libraries#link-to-workspace .
-                    -- Lua-dev.nvim also has similar settings for lua ls, https://github.com/folke/neodev.nvim/blob/main/lua/neodev/luals.lua .
-                    library = {
-                        fn.stdpath("data") .. "/lazy/emmylua-nvim",
-                        fn.stdpath("config"),
-                    },
-                    maxPreload = 2000,
-                    preloadFileSize = 50000,
-                },
-            },
-        },
-        capabilities = capabilities,
-    }
-end
-
-if utils.executable("nginx-language-server") then
-    require 'lspconfig'.nginx_language_server.setup {
-        on_attach = custom_attach,
-        capabilities = capabilities,
-    }
-end
 
 -- Change diagnostic signs.
 fn.sign_define("DiagnosticSignError", { text = "", texthl = "DiagnosticSignError" })

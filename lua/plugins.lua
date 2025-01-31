@@ -62,7 +62,7 @@ local plugin_specs = {
       require("config.lsp")
     end,
   },
-  { "williamboman/mason.nvim" }, -- lsp installation
+  { "williamboman/mason.nvim", "williamboman/mason-lspconfig.nvim" }, -- lsp installation
   {
     "nvim-treesitter/nvim-treesitter",
     enabled = function()
@@ -695,6 +695,8 @@ local lazy_opts = {
 
 require("lazy").setup(plugin_specs, lazy_opts)
 require("mason").setup()
+require("mason-lspconfig").setup()
+
 require("Comment").setup()
 -- require("luasnip.loaders.from_vscode").lazy_load()
 -- require'luasnip'.filetype_extend("ruby", {"rails"})
