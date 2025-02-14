@@ -148,6 +148,39 @@ require("mason-lspconfig").setup_handlers {
       },
     }
   end,
+  ["pylsp"] = function()
+    require("lspconfig")["pylsp"].setup {
+      on_attach = custom_attach,
+      capabilities = capabilities,
+      settings = {
+        pylsp = {
+          plugins = {
+            -- formatter options
+            flake8 = { enabled = false },
+            black = { enabled = false },
+            autopep8 = { enabled = false },
+            yapf = { enabled = false },
+            pycodestyle = { enabled = false },
+            -- linter options
+            pylint = { enabled = false, executable = "pylint" },
+            ruff = { enabled = true },
+            pyflakes = { enabled = false },
+            -- type checker
+            pylsp_mypy = {
+              enabled = true,
+              overrides = { "--python-executable", py_path, true },
+              report_progress = true,
+              live_mode = false,
+            },
+            -- auto-completion options
+            jedi_completion = { fuzzy = true },
+            -- import sorting
+            isort = { enabled = true },
+          },
+        },
+      },
+    }
+  end,
 }
 
 -- -- if utils.executable("pylsp") then
