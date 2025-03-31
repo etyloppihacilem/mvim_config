@@ -572,33 +572,33 @@ local plugin_specs = {
       { "<leader>vc", "<cmd>VenvSelectCached<cr>" },
     },
   },
-  {
-    "nvim-orgmode/orgmode",
-    dependencies = {
-      { "nvim-treesitter/nvim-treesitter", lazy = true },
-    },
-    event = "VeryLazy",
-    config = function()
-      -- Load treesitter grammar for org
-      -- require('orgmode').setup_ts_grammar()
-      -- no longer required
-
-      -- Setup treesitter
-      require("nvim-treesitter.configs").setup {
-        highlight = {
-          enable = true,
-          additional_vim_regex_highlighting = { "org" },
-        },
-        ensure_installed = { "org" },
-      }
-
-      -- Setup orgmode
-      require("orgmode").setup {
-        org_agenda_files = "~/orgfiles/**/*",
-        org_default_notes_file = "~/orgfiles/refile.org",
-      }
-    end,
-  },
+  -- {
+  --   "nvim-orgmode/orgmode",
+  --   dependencies = {
+  --     { "nvim-treesitter/nvim-treesitter", lazy = true },
+  --   },
+  --   event = "VeryLazy",
+  --   config = function()
+  --     -- Load treesitter grammar for org
+  --     -- require('orgmode').setup_ts_grammar()
+  --     -- no longer required
+  --
+  --     -- Setup treesitter
+  --     require("nvim-treesitter.configs").setup {
+  --       highlight = {
+  --         enable = true,
+  --         additional_vim_regex_highlighting = { "org" },
+  --       },
+  --       ensure_installed = { "org" },
+  --     }
+  --
+  --     -- Setup orgmode
+  --     require("orgmode").setup {
+  --       org_agenda_files = "~/orgfiles/**/*",
+  --       org_default_notes_file = "~/orgfiles/refile.org",
+  --     }
+  --   end,
+  -- },
   -- add this to your lua/plugins.lua, lua/plugins/init.lua,  or the file you keep your other plugins:
   {
     "numToStr/Comment.nvim",
@@ -612,6 +612,10 @@ local plugin_specs = {
   },
   {
     "zacharied/lc3.vim",
+  },
+  {
+    "cachebag/nvim-tcss",
+    config = true,
   },
   {
     "folke/todo-comments.nvim",
@@ -694,18 +698,18 @@ local lazy_opts = {
 }
 
 require("lazy").setup(plugin_specs, lazy_opts)
-require("mason").setup({
-    ensure_installed = {
-        "prettier",
-        "stylua"
-    },
-})
-require("mason-lspconfig").setup({
-    ensure_installed = {
-        "ruff",
-        "pylsp",
-    },
-})
+require("mason").setup {
+  ensure_installed = {
+    "prettier",
+    "stylua",
+  },
+}
+require("mason-lspconfig").setup {
+  ensure_installed = {
+    "ruff",
+    "pylsp",
+  },
+}
 
 require("Comment").setup()
 -- require("luasnip.loaders.from_vscode").lazy_load()
@@ -725,3 +729,11 @@ require("conform").setup {
     json = { "prettier" },
   },
 }
+require('tcss').setup({
+    -- Enable syntax highlighting (default: true)
+    enable = true,
+    -- Custom color overrides
+    colors = {
+        -- Add custom highlighting rules here
+    }
+})
