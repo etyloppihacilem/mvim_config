@@ -117,7 +117,7 @@ local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 -- local lspconfig = require("lspconfig")
 
-require("mason-lspconfig").setup_handlers {
+require("mason-lspconfig").setup {
   -- The first entry (without a key) will be the default handler
   -- and will be called for each installed server that doesn't have
   -- a dedicated handler.
