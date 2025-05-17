@@ -6,10 +6,14 @@ Quite some things have been modified.
 
 # Install
 
-``` bash
-git clone https://github.com/etyloppihacilem/mvim_config ~/.config/nvim
-cd ~/.config/nvim
-./docs/post_install.sh
-```
+Do not use the `post_install.sh` script, it has not been update in some time...
 
-This config requires `python3`, `npm`, `make`, `cmake` to be installed.
+You need to install nerd fonts, I recommend symbols only with `symbol_map` override on kitty for example, find the lastest on [kitty's website](https://sw.kovidgoyal.net/kitty/faq/#kitty-is-not-able-to-use-my-favorite-font).
+
+Install `vim-language-server` using
+```bash
+npm install -g vim-language-server
+```
+Install `python-lsp-isort`
+
+Install `ripgrep` with your package manager, it is super useful anyway
