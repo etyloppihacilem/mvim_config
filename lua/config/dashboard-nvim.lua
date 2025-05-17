@@ -20,7 +20,7 @@ conf.center = {
     key = "<Leader> f f",
   },
   {
-    icon = "󰈢  ",
+    icon = "󱋡  ",
     desc = "Recently opened files                   ",
     action = "Telescope oldfiles",
     key = "<Leader> f r",
