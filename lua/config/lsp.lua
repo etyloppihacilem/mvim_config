@@ -113,16 +113,24 @@ local custom_attach = function(client, bufnr)
 end
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
+capabilities.offsetEncoding = { "utf-16" }
 
-require("mason-lspconfig").setup {
-  automatic_enable = true,
-  function(server_name) -- default handler (optional)
-    require("lspconfig")[server_name].setup {
-      on_attach = custom_attach,
-      capabilities = capabilities,
-    }
-  end,
-}
+require("mason-lspconfig").setup({
+  automatic_installation = true,
+})
+
+-- for _, server in ipairs(require("mason-lspconfig").get_installed_servers()) do
+--   local opts = server_configs[server] or {}
+--   opts.capabilities = capabilities
+--   opts.on_attach = custom_attach
+--   require("lspconfig")[server].setup(opts)
+-- end
+
+require("lspconfig").clangd.setup({
+  cmd = { "clangd", "--offset-encoding=utf-16" },
+  capabilities = capabilities,
+  on_attach = custom_attach,
+})
 
 diagnostic.config {
   virtual_text = false,

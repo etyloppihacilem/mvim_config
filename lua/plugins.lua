@@ -62,7 +62,16 @@ local plugin_specs = {
       require("config.lsp")
     end,
   },
-  { "williamboman/mason.nvim", "williamboman/mason-lspconfig.nvim" }, -- lsp installation
+  {
+    "mason-org/mason-lspconfig.nvim",
+    opts = {
+      ensure_installed = { "lua_ls", "rust_analyzer" },
+    },
+    dependencies = {
+      { "mason-org/mason.nvim", opts = {} },
+      "neovim/nvim-lspconfig",
+    },
+  },
   {
     "nvim-treesitter/nvim-treesitter",
     enabled = function()
@@ -729,11 +738,11 @@ require("conform").setup {
     json = { "prettier" },
   },
 }
-require('tcss').setup({
-    -- Enable syntax highlighting (default: true)
-    enable = true,
-    -- Custom color overrides
-    colors = {
-        -- Add custom highlighting rules here
-    }
-})
+require("tcss").setup {
+  -- Enable syntax highlighting (default: true)
+  enable = true,
+  -- Custom color overrides
+  colors = {
+    -- Add custom highlighting rules here
+  },
+}
