@@ -117,3 +117,10 @@ vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
 --   pattern = "*.md",
 --   command = "set textwidth=120"
 -- })
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "c",
+  callback = function()
+    vim.b.delimitMate_matchpairs = "(:),[:],{:}"
+  end,
+})
