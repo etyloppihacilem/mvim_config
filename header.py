@@ -22,6 +22,7 @@ def which_comments(filename):
     """
     default = ["#"]
     table = [
+        [["s", "asm"], [";"]],
         [["py", "sh"], ["#"]],
         [["h", "hpp", "c", "cpp", "js", "php"], ["/*", "*/"]],
         [["html"], ["<!--", "-->"]],
