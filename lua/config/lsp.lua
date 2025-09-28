@@ -126,7 +126,7 @@ require("mason-lspconfig").setup({
 --   require("lspconfig")[server].setup(opts)
 -- end
 
-require("lspconfig").clangd.setup({
+vim.lsp.config("clangd", {
   cmd = { "clangd", "--offset-encoding=utf-16" },
   capabilities = capabilities,
   on_attach = custom_attach,
