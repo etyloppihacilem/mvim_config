@@ -16,6 +16,8 @@ require("nvim-treesitter.configs").setup {
     "typescript",
     "vim",
     "vimdoc",
+    "asm",
+    "nix",
   },
   ignore_install = {}, -- List of parsers to ignore installing
   highlight = {

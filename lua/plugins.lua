@@ -708,8 +708,17 @@ local lazy_opts = {
 require("lazy").setup(plugin_specs, lazy_opts)
 require("mason").setup {
   ensure_installed = {
+    "arduino-language-server",
+    "asm-lsp",
+    "clangd",
+    "cmake-language-server",
+    "css-lsp",
+    "lua-language-server",
     "prettier",
+    "python-lsp-server",
+    "ruff",
     "stylua",
+    "nil",
   },
 }
 require("mason-lspconfig").setup {
