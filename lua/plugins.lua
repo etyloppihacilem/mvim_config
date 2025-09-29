@@ -716,17 +716,15 @@ require("mason-lspconfig").setup {
   ensure_installed = {
     "ruff",
     "pylsp",
-    "arduino-language-server",
-    "asm-lsp",
+    "arduino_language_server",
+    "asm_lsp",
     "clangd",
-    "cmake-language-server",
-    "css-lsp",
-    "lua-language-server",
-    "python-lsp-server",
-    "nil",
+    "cmake",
+    "cssls",
+    "lua_ls",
+    -- "nil_ls",
   },
 }
-
 require("Comment").setup()
 -- require("luasnip.loaders.from_vscode").lazy_load()
 -- require'luasnip'.filetype_extend("ruby", {"rails"})
