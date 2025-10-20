@@ -24,7 +24,7 @@ def which_comments(filename):
     table = [
         [["s", "asm"], [";"]],
         [["py", "sh"], ["#"]],
-        [["h", "hpp", "c", "cpp", "js", "php"], ["/*", "*/"]],
+        [["h", "hpp", "c", "cpp", "js", "php", "v"], ["/*", "*/"]],
         [["html"], ["<!--", "-->"]],
         [["vdh", "lua"], ["--"]],
         [["vim"], ["\""]],
