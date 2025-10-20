@@ -86,5 +86,6 @@ return {
         "private:",
         "\tstd::string _message;",
     "};"})
-    })
+    }),
+    s("todoin", {t("// TODO: instantiate this function")})
 }
