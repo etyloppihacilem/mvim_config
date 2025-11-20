@@ -390,6 +390,3 @@ nnoremap <leader>dp :<C-U>GdbStartPDB python -m pdb %<CR>
 "     echohl Error |echomsg "Wilder.nvim missing"| echohl None
 "   endtry
 " endfunction
-
-""" Disable copilot by default """
-Copilot disable

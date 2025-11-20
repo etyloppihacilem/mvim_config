@@ -616,9 +616,6 @@ local plugin_specs = {
     lazy = false,
   },
   {
-    "github/copilot.vim",
-  },
-  {
     "zacharied/lc3.vim",
   },
   {
@@ -718,7 +715,7 @@ require("mason-lspconfig").setup {
     "pylsp",
     "arduino_language_server",
     "asm_lsp",
-    "clangd",
+    -- "clangd",
     "cmake",
     "cssls",
     "lua_ls",

@@ -16,6 +16,7 @@ end
 M.luasnip = function(opts)
   require("luasnip").config.set_config(opts)
 
+
   M.loaders()
 
   vim.api.nvim_create_autocmd("InsertLeave", {

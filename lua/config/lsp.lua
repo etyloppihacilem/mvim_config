@@ -4,7 +4,6 @@ local keymap = vim.keymap
 local lsp = vim.lsp
 local diagnostic = vim.diagnostic
 
-
 -- set quickfix list from diagnostics in a certain buffer, not the whole workspace
 local set_qflist = function(buf_num, severity)
   local diagnostics = nil
@@ -113,11 +112,12 @@ local custom_attach = function(client, bufnr)
 end
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
-capabilities.offsetEncoding = { "utf-16" }
+-- capabilities.offsetEncoding = { "utf-16" }
+capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-require("mason-lspconfig").setup({
+require("mason-lspconfig").setup {
   automatic_installation = true,
-})
+}
 
 -- for _, server in ipairs(require("mason-lspconfig").get_installed_servers()) do
 --   local opts = server_configs[server] or {}
@@ -126,8 +126,50 @@ require("mason-lspconfig").setup({
 --   require("lspconfig")[server].setup(opts)
 -- end
 
+-- 🧠 Chemins prédéfinis
+local clangd_paths = {
+  system = { "clangd", "--completion-style=detailed", "--function-arg-placeholders=1", "-log=verbose" },
+  local_build = {
+    "/home/sherlock/Desktop/clangd/llvm-project/build/bin/clangd",
+    "--completion-style=detailed",
+    "--function-arg-placeholders=1",
+    "-log=verbose",
+  },
+}
+
+-- 🔄 Variable d’état
+local current = "system"
+
+-- ⚙️ Fonction pour basculer
+local function switch_clangd_cmd()
+  -- Bascule entre les deux modes
+  current = (current == "local_build") and "system" or "local_build"
+
+  -- Applique la nouvelle commande
+  vim.lsp.config("clangd", {
+    -- cmd = { "clangd", "--completion-style=detailed", "--function-arg-placeholders=1", "-log=verbose" },
+    -- cmd = { "/home/sherlock/Desktop/clangd/llvm-project/build/bin/clangd", "--completion-style=detailed", "--function-arg-placeholders=1", "-log=verbose" },
+    cmd = clangd_paths[current],
+    -- cmd = { "/home/sherlock/Desktop/clangd/llvm-project/build/bin/clangd", "--function-arg-placeholders=0", "-log=verbose" },
+    capabilities = capabilities,
+    on_attach = custom_attach,
+  })
+
+  -- Redémarre le serveur LSP
+  vim.cmd("LspRestart clangd")
+
+  -- Affiche la config active
+  vim.notify("Clangd switched to: " .. current, vim.log.levels.INFO)
+end
+
+-- 📦 Crée une commande Neovim : :ClangdSwitchCmd
+vim.api.nvim_create_user_command("ClangdSwitchCmd", switch_clangd_cmd, {})
+
 vim.lsp.config("clangd", {
-  cmd = { "clangd", "--offset-encoding=utf-16" },
+  -- cmd = { "clangd", "--completion-style=detailed", "--function-arg-placeholders=1", "-log=verbose" },
+  -- cmd = { "/home/sherlock/Desktop/clangd/llvm-project/build/bin/clangd", "--completion-style=detailed", "--function-arg-placeholders=1", "-log=verbose" },
+  cmd = clangd_paths.system,
+  -- cmd = { "/home/sherlock/Desktop/clangd/llvm-project/build/bin/clangd", "--function-arg-placeholders=0", "-log=verbose" },
   capabilities = capabilities,
   on_attach = custom_attach,
 })

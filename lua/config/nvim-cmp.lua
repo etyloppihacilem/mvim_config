@@ -2,6 +2,7 @@
 local cmp = require("cmp")
 local cmp_buffer = require("cmp_buffer")
 local lspkind = require("lspkind")
+local luasnip = require("luasnip")
 
 cmp.setup {
   snippet = {
@@ -30,6 +31,13 @@ cmp.setup {
     ["<Esc>"] = cmp.mapping.close(),
     ["<C-d>"] = cmp.mapping.scroll_docs(-4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
+    ["<C-j>"] = cmp.mapping(function(fallback)
+      if luasnip.jumpable(1) then
+        luasnip.jump(1)
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
   },
   sources = {
     { name = "nvim_lsp", priority = 10 }, -- For nvim-lsp
@@ -248,3 +256,23 @@ cmp.setup.cmdline(":", {
     },
   },
 })
+--
+-- cmp.event:on('menu_opened', function()
+--   vim.defer_fn(function()
+--     local entry = cmp.get_selected_entry()
+--     if not entry then
+--       print("❌ Aucun item sélectionné")
+--       return
+--     end
+--     local item = entry.completion_item
+--     local msg = string.format(
+--       "🪶 Label: %s\n📜 insertTextFormat: %s\n🧩 insertText: %s\nx details: %s\nL details: %s",
+--       item.label or "<nil>",
+--       tostring(item.insertTextFormat),
+--       item.insertText or "<nil>",
+--       item.detail or "<nil>",
+--       item.labelDetails.detail or "<nil>"
+--     )
+--     vim.notify(msg, vim.log.levels.INFO)
+--   end, 700)
+-- end)
