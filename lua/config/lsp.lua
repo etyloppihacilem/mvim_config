@@ -130,7 +130,13 @@ require("mason-lspconfig").setup {
 local clangd_paths = {
   system = { "clangd", "--completion-style=detailed", "--function-arg-placeholders=1", "-log=verbose" },
   local_build = {
-    "/home/sherlock/Desktop/clangd/llvm-project/build/bin/clangd",
+    "/home/sherlock/Desktop/clangd/build-release/bin/clangd",
+    "--completion-style=detailed",
+    "--function-arg-placeholders=1",
+    "-log=verbose",
+  },
+  debug_build = {
+    "/home/sherlock/Desktop/clangd/build-debug/bin/clangd",
     "--completion-style=detailed",
     "--function-arg-placeholders=1",
     "-log=verbose",
@@ -138,12 +144,12 @@ local clangd_paths = {
 }
 
 -- 🔄 Variable d’état
-local current = "system"
+local current = "local_build"
 
 -- ⚙️ Fonction pour basculer
 local function switch_clangd_cmd()
   -- Bascule entre les deux modes
-  current = (current == "local_build") and "system" or "local_build"
+  current = (current == "local_build") and "system" or ((current == "system") and "debug_build" or "local_build")
 
   -- Applique la nouvelle commande
   vim.lsp.config("clangd", {
@@ -168,7 +174,7 @@ vim.api.nvim_create_user_command("ClangdSwitchCmd", switch_clangd_cmd, {})
 vim.lsp.config("clangd", {
   -- cmd = { "clangd", "--completion-style=detailed", "--function-arg-placeholders=1", "-log=verbose" },
   -- cmd = { "/home/sherlock/Desktop/clangd/llvm-project/build/bin/clangd", "--completion-style=detailed", "--function-arg-placeholders=1", "-log=verbose" },
-  cmd = clangd_paths.system,
+  cmd = clangd_paths[current],
   -- cmd = { "/home/sherlock/Desktop/clangd/llvm-project/build/bin/clangd", "--function-arg-placeholders=0", "-log=verbose" },
   capabilities = capabilities,
   on_attach = custom_attach,

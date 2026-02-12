@@ -256,6 +256,7 @@ keymap.set(
 keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<CR>", { desc = "telescope find buffers" })
 keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "telescope help page" })
 keymap.set("n", "<leader>ma", "<cmd>Telescope marks<CR>", { desc = "telescope find marks" })
+keymap.set("n", "<leader>fs", "<cmd>Telescope lsp_dynamic_workspace_symbols<CR>", { desc = "telescope find symbols" })
 keymap.set("n", "<leader>fo", "<cmd>Telescope oldfiles<CR>", { desc = "telescope find oldfiles" })
 keymap.set(
   "n",
