@@ -7,12 +7,10 @@ nvim_tree.setup {
   hijack_cursor = false,
   hijack_netrw = true,
   hijack_unnamed_buffer_when_opening = false,
-  open_on_tab = false,
   sort_by = "name",
-  update_cwd = false,
+  sync_root_with_cwd = false, -- anciennement update_cwd
   view = {
     width = 30,
-    --hide_root_folder = false,
     side = "left",
     preserve_window_proportions = false,
     number = false,
@@ -29,7 +27,11 @@ nvim_tree.setup {
       },
     },
     icons = {
-      webdev_colors = true,
+      -- anciennement webdev_colors = true
+      web_devicons = {
+        file = { enable = true, color = true },
+        folder = { enable = false, color = true },
+      },
     },
   },
   hijack_directories = {
@@ -38,21 +40,21 @@ nvim_tree.setup {
   },
   update_focused_file = {
     enable = false,
-    update_cwd = false,
-    ignore_list = {},
+    -- anciennement update_cwd + ignore_list
+    update_root = {
+      enable = false,
+      ignore_list = {},
+    },
   },
-  system_open = {
-    cmd = "",
-    args = {},
-  },
+  -- system_open supprimé : nvim-tree utilise maintenant vim.ui.open()
   diagnostics = {
     enable = true,
     show_on_dirs = true,
     icons = {
-      hint = "",
-      info = "",
-      warning = "",
-      error = "",
+      hint = "",
+      info = "",
+      warning = "",
+      error = "",
     },
   },
   filters = {
@@ -87,7 +89,11 @@ nvim_tree.setup {
   },
   trash = {
     cmd = "trash",
-    require_confirm = true,
+  },
+  ui = {
+    confirm = {
+      trash = true, -- anciennement trash.require_confirm
+    },
   },
   log = {
     enable = false,

@@ -712,7 +712,7 @@ require("mason").setup {
 require("mason-lspconfig").setup {
   ensure_installed = {
     "ruff",
-    "pylsp",
+    -- "pylsp",
     "arduino_language_server",
     "asm_lsp",
     -- "clangd",
@@ -731,6 +731,8 @@ require("conform").setup {
     -- Conform will run multiple formatters sequentially
     -- python = { "isort", "pylsp" },
     cpp = { "clang-format" },
+    latex = { "latexindent" },
+    tex = { "latexindent" },
     c = { "clang-format" },
     sh = { "beautysh" },
     html = { "prettier" },
@@ -738,6 +740,15 @@ require("conform").setup {
     typescript = { "prettier" },
     css = { "prettier" },
     json = { "prettier" },
+  },
+  formatters = {
+    latexindent = {
+      -- On force l'utilisation des flags pour le mode "stream"
+      -- -m : modify (nécessaire pour le traitement)
+      -- -l : local (cherche localsettings.yaml)
+      -- - : indique de lire depuis l'entrée standard (stdin)
+      args = { "-l", "-m", "-"},
+    },
   },
 }
 require("tcss").setup {

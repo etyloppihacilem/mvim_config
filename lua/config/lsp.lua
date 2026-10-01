@@ -128,17 +128,28 @@ require("mason-lspconfig").setup {
 
 -- 🧠 Chemins prédéfinis
 local clangd_paths = {
-  system = { "clangd", "--completion-style=detailed", "--function-arg-placeholders=1", "-log=verbose" },
+  system = {
+    "clangd",
+    "--completion-style=detailed",
+    "--function-arg-placeholders=1",
+    "--clang-tidy",
+    "--completion-style=detailed",
+    "-log=verbose",
+  },
   local_build = {
     "/home/sherlock/Desktop/clangd/build-release/bin/clangd",
     "--completion-style=detailed",
     "--function-arg-placeholders=1",
+    "--clang-tidy",
+    "--completion-style=detailed",
     "-log=verbose",
   },
   debug_build = {
     "/home/sherlock/Desktop/clangd/build-debug/bin/clangd",
     "--completion-style=detailed",
     "--function-arg-placeholders=1",
+    "--clang-tidy",
+    "--completion-style=detailed",
     "-log=verbose",
   },
 }
