@@ -1,56 +1,35 @@
--- This is my personal Nvim configuration supporting Mac, Linux and Windows, with various plugins configured.
--- This configuration evolves as I learn more about Nvim and become more proficient in using Nvim.
--- Since it is very long (more than 1000 lines!), you should read it carefully and take only the settings that suit you.
--- I would not recommend cloning this repo and replace your own config. Good configurations are personal,
--- built over time with a lot of polish.
+-- Neovim configuration entry point.
 --
--- Author: Jiedong Hao
--- Email: jdhao@hotmail.com
--- Blog: https://jdhao.github.io/
--- GitHub: https://github.com/jdhao
--- StackOverflow: https://stackoverflow.com/users/6064933/jdhao
+-- Originally forked from https://github.com/jdhao/nvim-config, now maintained by hmelica.
+-- Targets the latest Neovim stable release (0.12+).
+--
+-- Layout:
+--   lua/core/      editor settings that do not depend on plugins (options, keymaps, autocmds, LSP, lazy.nvim)
+--   lua/plugins/   lazy.nvim plugin specs, one file per theme
+--   lua/config/    bigger plugin configurations required from the specs
+--   after/lsp/     native LSP server settings, merged over nvim-lspconfig (see `:h lsp-config`)
 vim.loader.enable()
 
-local version = vim.version
+local config_dir = vim.fn.stdpath("config")
 
--- check if we have the latest stable version of nvim
-local expected_ver = "0.9.4"
-local ev = version.parse(expected_ver)
-local actual_ver = version()
-
--- if version.cmp(ev, actual_ver) ~= 0 then
---   local _ver = string.format("%s.%s.%s", actual_ver.major, actual_ver.minor, actual_ver.patch)
---   local msg = string.format("Expect nvim %s, but got %s instead. Use at your own risk!", expected_ver, _ver)
---   vim.api.nvim_err_writeln(msg)
--- end
-
-vim.env.PATH = vim.fn.stdpath("config") .. '/venv_nvim/bin:/mnt/nfs/homes/hmelica/tools/node-v14.15.4-linux-x64/bin:' .. vim.env.PATH
-
-vim.g.python3_host_prog = vim.fn.stdpath("config") .. '/venv_nvim/bin/python3'
-
-local core_conf_files = {
-  "globals.lua", -- some global settings
-  "options.vim", -- setting options in nvim
-  "autocommands.vim", -- various autocommands
-  "mappings.lua", -- all the user-defined mappings
-  "plugins.vim", -- all the plugins installed and their configurations
-  "colorschemes.lua", -- colorscheme settings
+-- Optional local tool directories: a Python venv living next to the config (see requirements.txt)
+-- and a user-installed Node.js. They are only added to PATH when they exist.
+local extra_paths = {
+  config_dir .. "/venv_nvim/bin",
+  vim.fn.expand("~/tools/node-v14.15.4-linux-x64/bin"),
 }
-
-header_script = vim.fn.stdpath("config") .. "/header.py"
-
--- snippets path
-vim.g.lua_snippets_path = vim.fn.stdpath("config") .. "/my_snippets"
-
--- source all the core config files
-for _, file_name in ipairs(core_conf_files) do
-  if vim.endswith(file_name, 'vim') then
-    local path = string.format("%s/core/%s", vim.fn.stdpath("config"), file_name)
-    local source_cmd = "source " .. path
-    vim.cmd(source_cmd)
-  else
-    local module_name, _ = string.gsub(file_name, "%.lua", "")
-    package.loaded[module_name] = nil
-    require(module_name)
+for _, dir in ipairs(extra_paths) do
+  if vim.fn.isdirectory(dir) == 1 then
+    vim.env.PATH = dir .. ":" .. vim.env.PATH
   end
 end
+
+require("core.globals") -- global variables, leader key, disabled builtin plugins
+require("core.options") -- editor options
+require("core.filetypes") -- custom filetype detection
+require("core.autocmds") -- autocommands
+require("core.keymaps") -- plugin-independent mappings
+require("core.lsp") -- native LSP setup (diagnostics, keymaps on attach, enabled servers)
+require("core.lazy") -- plugin manager and plugins
+
+require("config.colorschemes").load("edge")

@@ -1,8 +1,6 @@
-set commentstring=//\ %s
-
 " Disable inserting comment leader after hitting o or O or <Enter>
-set formatoptions-=o
-set formatoptions-=r
+setlocal formatoptions-=o
+setlocal formatoptions-=r
 
 nnoremap <silent> <buffer> <F9> :call <SID>compile_run_cpp()<CR>
 
@@ -24,9 +22,7 @@ function! s:compile_run_cpp() abort
   startinsert
 endfunction
 
-function s:create_term_buf(_type, size) abort
-  set splitbelow
-  set splitright
+function! s:create_term_buf(_type, size) abort
   if a:_type ==# 'v'
     vnew
   else
