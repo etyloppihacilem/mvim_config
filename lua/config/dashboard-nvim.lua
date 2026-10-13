@@ -23,7 +23,7 @@ conf.center = {
     icon = "󱋡  ",
     desc = "Recently opened files                   ",
     action = "Telescope oldfiles",
-    key = "<Leader> f r",
+    key = "<Leader> f o",
   },
   {
     icon = "󰈬  ",
@@ -64,20 +64,10 @@ conf.center = {
   },
 }
 
-local preview = {
-  preview = {
-    command = "cat",
-    file_path = vim.fn.stdpath("config") .. "dashboard-ansi.txt",
-    file_width = 36,
-    file_height = 6,
-  },
-}
-
 dashboard.setup {
   theme = "doom",
   shortcut_type = "number",
   config = conf,
-  preview = preview,
 }
 
 api.nvim_create_autocmd("FileType", {

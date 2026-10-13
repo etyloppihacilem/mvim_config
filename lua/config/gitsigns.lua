@@ -22,7 +22,7 @@ gs.setup {
         return "]c"
       end
       vim.schedule(function()
-        gs.next_hunk()
+        gs.nav_hunk("next")
       end)
       return "<Ignore>"
     end, { expr = true, desc = "next hunk" })
@@ -32,26 +32,26 @@ gs.setup {
         return "[c"
       end
       vim.schedule(function()
-        gs.prev_hunk()
+        gs.nav_hunk("prev")
       end)
       return "<Ignore>"
     end, { expr = true, desc = "previous hunk" })
 
     -- Actions
-    map("n", "<leader>hp", gs.preview_hunk)
+    map("n", "<leader>hp", gs.preview_hunk, { desc = "preview hunk" })
     map("n", "<leader>hb", function()
       gs.blame_line { full = true }
-    end)
+    end, { desc = "blame line" })
   end,
 }
 
+local function set_inline_highlights()
+  vim.api.nvim_set_hl(0, "GitSignsChangeInline", { reverse = true })
+  vim.api.nvim_set_hl(0, "GitSignsAddInline", { reverse = true })
+  vim.api.nvim_set_hl(0, "GitSignsDeleteInline", { reverse = true })
+end
+set_inline_highlights()
 vim.api.nvim_create_autocmd("ColorScheme", {
-  pattern = "*",
-  callback = function()
-    vim.cmd([[
-      hi GitSignsChangeInline gui=reverse
-      hi GitSignsAddInline gui=reverse
-      hi GitSignsDeleteInline gui=reverse
-    ]])
-  end,
+  group = vim.api.nvim_create_augroup("gitsigns_inline_hl", { clear = true }),
+  callback = set_inline_highlights,
 })

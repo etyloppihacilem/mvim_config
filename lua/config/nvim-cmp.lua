@@ -1,58 +1,83 @@
--- Setup nvim-cmp.
 local cmp = require("cmp")
-local cmp_buffer = require("cmp_buffer")
 local lspkind = require("lspkind")
 local luasnip = require("luasnip")
+
+local formatting = {
+  format = lspkind.cmp_format {
+    mode = "symbol_text",
+    menu = {
+      nvim_lsp = "[LSP]",
+      luasnip = "[Snip]",
+      async_path = "[Path]",
+      buffer = "[Buffer]",
+      emoji = "[Emoji]",
+      omni = "[Omni]",
+      cmdline = "[Cmd]",
+    },
+    show_labelDetails = true,
+    maxwidth = 40,
+    ellipsis_char = "...",
+  },
+}
+
+-- Complete words from every buffer, not only the current one
+local buffer_source = {
+  name = "buffer",
+  keyword_length = 2,
+  option = {
+    get_bufnrs = function()
+      return vim.api.nvim_list_bufs()
+    end,
+  },
+}
 
 cmp.setup {
   snippet = {
     expand = function(args)
-      -- For `luasnip` user.
-      require("luasnip").lsp_expand(args.body)
+      luasnip.lsp_expand(args.body)
     end,
   },
   mapping = cmp.mapping.preset.insert {
-    ["<Tab>"] = function(fallback)
+    ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
       else
         fallback()
       end
-    end,
-    ["<S-Tab>"] = function(fallback)
+    end, { "i", "s" }),
+    ["<S-Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
       else
         fallback()
       end
-    end,
+    end, { "i", "s" }),
     ["<CR>"] = cmp.mapping.confirm { select = true },
     ["<C-e>"] = cmp.mapping.abort(),
     ["<Esc>"] = cmp.mapping.close(),
     ["<C-d>"] = cmp.mapping.scroll_docs(-4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
+    -- Expand a snippet or jump to its next / previous placeholder
     ["<C-j>"] = cmp.mapping(function(fallback)
-      if luasnip.jumpable(1) then
-        luasnip.jump(1)
+      if luasnip.expand_or_locally_jumpable() then
+        luasnip.expand_or_jump()
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
+    ["<C-k>"] = cmp.mapping(function(fallback)
+      if luasnip.locally_jumpable(-1) then
+        luasnip.jump(-1)
       else
         fallback()
       end
     end, { "i", "s" }),
   },
   sources = {
-    { name = "nvim_lsp", priority = 10 }, -- For nvim-lsp
-    { name = "luasnip" }, -- For luasnip user.
-    { name = "async_path", priority = 5 }, -- for path completion
-    {
-      name = "buffer",
-      keyword_length = 2,
-      option = {
-        get_bufnrs = function()
-          return vim.api.nvim_list_bufs()
-        end,
-      },
-    }, -- for buffer word completion
-    -- { name = "emoji", insert = true }, -- emoji completion
+    { name = "nvim_lsp", priority = 10 },
+    { name = "luasnip" },
+    { name = "async_path", priority = 5 },
+    buffer_source,
   },
   completion = {
     keyword_length = 1,
@@ -61,218 +86,56 @@ cmp.setup {
   view = {
     entries = "custom",
   },
-  formatting = {
-    format = lspkind.cmp_format {
-      mode = "symbol_text",
-      menu = {
-        nvim_lsp = "[LSP]",
-        luasnip = "[US]",
-        -- nvim_lua = "[Lua]",
-        path = "[Path]",
-        buffer = "[Buffer]",
-        emoji = "[Emoji]",
-        omni = "[Omni]",
-      },
-      show_labelDetails = true,
-      maxwidth = 40,
-      ellipsis_char = "...",
-    },
-  },
+  formatting = formatting,
 }
 
 cmp.setup.filetype("tex", {
   sources = {
     { name = "omni" },
-    { name = "luasnip" }, -- For luasnip user.
-    { name = "buffer", keyword_length = 2 }, -- for buffer word completion
-    { name = "async_pat" }, -- for path completion
+    { name = "luasnip" },
+    { name = "buffer", keyword_length = 2 },
+    { name = "async_path" },
   },
 })
 
---  see https://github.com/hrsh7th/nvim-cmp/wiki/Menu-Appearance#how-to-add-visual-studio-code-dark-theme-colors-to-the-menu
-vim.cmd([[
-  highlight! link CmpItemMenu Comment
-  " gray
-  highlight! CmpItemAbbrDeprecated guibg=NONE gui=strikethrough guifg=#808080
-  " blue
-  highlight! CmpItemAbbrMatch guibg=NONE guifg=#569CD6
-  highlight! CmpItemAbbrMatchFuzzy guibg=NONE guifg=#569CD6
-  " light blue
-  highlight! CmpItemKindVariable guibg=NONE guifg=#9CDCFE
-  highlight! CmpItemKindInterface guibg=NONE guifg=#9CDCFE
-  highlight! CmpItemKindText guibg=NONE guifg=#9CDCFE
-  " pink
-  highlight! CmpItemKindFunction guibg=NONE guifg=#C586C0
-  highlight! CmpItemKindMethod guibg=NONE guifg=#C586C0
-  " front
-  highlight! CmpItemKindKeyword guibg=NONE guifg=#D4D4D4
-  highlight! CmpItemKindProperty guibg=NONE guifg=#D4D4D4
-  highlight! CmpItemKindUnit guibg=NONE guifg=#D4D4D4
-]])
-
--- cmp on : and /
--- `/` cmdline setup.
-cmp.setup.cmdline("/", {
-  snippet = {
-    expand = function(args)
-      -- For `luasnip` user.
-      require("luasnip").lsp_expand(args.body)
-    end,
-  },
-  mapping = cmp.mapping.preset.insert {
-    ["<Tab>"] = function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      else
-        fallback()
-      end
-    end,
-    ["<S-Tab>"] = function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      else
-        fallback()
-      end
-    end,
-    ["<CR>"] = cmp.mapping.confirm { select = true },
-    ["<C-e>"] = cmp.mapping.abort(),
-    ["<Esc>"] = cmp.mapping.close(),
-    ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-    ["<C-f>"] = cmp.mapping.scroll_docs(4),
-  },
-  sources = {
-    { name = "nvim_lsp", priority = 10 }, -- For nvim-lsp
-    { name = "luasnip" }, -- For luasnip user.
-    { name = "async_path", priority = 5 }, -- for path completion
-    {
-      name = "buffer",
-      keyword_length = 2,
-      option = {
-        get_bufnrs = function()
-          return vim.api.nvim_list_bufs()
-        end,
-      },
-    }, -- for buffer word completion
-    -- { name = "emoji", insert = true }, -- emoji completion
-  },
-  completion = {
-    keyword_length = 1,
-    completeopt = "menu,noselect",
-  },
-  view = {
-    entries = "custom",
-  },
-  formatting = {
-    format = lspkind.cmp_format {
-      mode = "symbol_text",
-      menu = {
-        nvim_lsp = "[LSP]",
-        luasnip = "[US]",
-        -- nvim_lua = "[Lua]",
-        path = "[Path]",
-        buffer = "[Buffer]",
-        emoji = "[Emoji]",
-        omni = "[Omni]",
-      },
-      show_labelDetails = true,
-      maxwidth = 40,
-      ellipsis_char = "...",
-    },
-  },
+-- Completion in the command line: search with `/` and `?`, commands with `:`
+cmp.setup.cmdline({ "/", "?" }, {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = { buffer_source },
+  formatting = formatting,
 })
--- `:` cmdline setup.
+
 cmp.setup.cmdline(":", {
-
-  snippet = {
-    expand = function(args)
-      -- For `luasnip` user.
-      require("luasnip").lsp_expand(args.body)
-    end,
-  },
-  mapping = cmp.mapping.preset.insert {
-    ["<Tab>"] = function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      else
-        fallback()
-      end
-    end,
-    ["<S-Tab>"] = function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      else
-        fallback()
-      end
-    end,
-    ["<CR>"] = cmp.mapping.confirm { select = true },
-    ["<C-e>"] = cmp.mapping.abort(),
-    ["<Esc>"] = cmp.mapping.close(),
-    ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-    ["<C-f>"] = cmp.mapping.scroll_docs(4),
-  },
-  sources = {
-    { name = "nvim_lsp", priority = 10 }, -- For nvim-lsp
-    { name = "luasnip" }, -- For luasnip user.
-    { name = "async_path", priority = 5 }, -- for path completion
-    {
-      name = "cmdline",
-      option = {
-        ignore_cmds = { "Man", "!" },
-      },
-    },
-    {
-      name = "buffer",
-      keyword_length = 2,
-      option = {
-        get_bufnrs = function()
-          return vim.api.nvim_list_bufs()
-        end,
-      },
-    }, -- for buffer word completion
-    -- { name = "emoji", insert = true }, -- emoji completion
-  },
-  completion = {
-    keyword_length = 1,
-    completeopt = "menu,noselect",
-  },
-  view = {
-    entries = "custom",
-  },
-  formatting = {
-    format = lspkind.cmp_format {
-      mode = "symbol_text",
-      menu = {
-        nvim_lsp = "[LSP]",
-        luasnip = "[US]",
-        -- nvim_lua = "[Lua]",
-        path = "[Path]",
-        buffer = "[Buffer]",
-        emoji = "[Emoji]",
-        omni = "[Omni]",
-      },
-      show_labelDetails = true,
-      maxwidth = 40,
-      ellipsis_char = "...",
-    },
-  },
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({
+    { name = "async_path" },
+  }, {
+    { name = "cmdline", option = { ignore_cmds = { "Man", "!" } } },
+  }),
+  formatting = formatting,
 })
---
--- cmp.event:on('menu_opened', function()
---   vim.defer_fn(function()
---     local entry = cmp.get_selected_entry()
---     if not entry then
---       print("❌ Aucun item sélectionné")
---       return
---     end
---     local item = entry.completion_item
---     local msg = string.format(
---       "🪶 Label: %s\n📜 insertTextFormat: %s\n🧩 insertText: %s\nx details: %s\nL details: %s",
---       item.label or "<nil>",
---       tostring(item.insertTextFormat),
---       item.insertText or "<nil>",
---       item.detail or "<nil>",
---       item.labelDetails.detail or "<nil>"
---     )
---     vim.notify(msg, vim.log.levels.INFO)
---   end, 700)
--- end)
+
+-- Colors inspired by VS Code dark theme, see
+-- https://github.com/hrsh7th/nvim-cmp/wiki/Menu-Appearance#how-to-add-visual-studio-code-dark-theme-colors-to-the-menu
+local function set_cmp_highlights()
+  local hl = function(name, val)
+    vim.api.nvim_set_hl(0, name, val)
+  end
+  hl("CmpItemMenu", { link = "Comment" })
+  hl("CmpItemAbbrDeprecated", { strikethrough = true, fg = "#808080" })
+  hl("CmpItemAbbrMatch", { fg = "#569CD6" })
+  hl("CmpItemAbbrMatchFuzzy", { fg = "#569CD6" })
+  hl("CmpItemKindVariable", { fg = "#9CDCFE" })
+  hl("CmpItemKindInterface", { fg = "#9CDCFE" })
+  hl("CmpItemKindText", { fg = "#9CDCFE" })
+  hl("CmpItemKindFunction", { fg = "#C586C0" })
+  hl("CmpItemKindMethod", { fg = "#C586C0" })
+  hl("CmpItemKindKeyword", { fg = "#D4D4D4" })
+  hl("CmpItemKindProperty", { fg = "#D4D4D4" })
+  hl("CmpItemKindUnit", { fg = "#D4D4D4" })
+end
+set_cmp_highlights()
+vim.api.nvim_create_autocmd("ColorScheme", {
+  group = vim.api.nvim_create_augroup("cmp_highlights", { clear = true }),
+  callback = set_cmp_highlights,
+})
